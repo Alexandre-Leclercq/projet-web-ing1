@@ -63,21 +63,9 @@ class Course
      */
     private $active = true;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getIdCourse(): ?int
     {
         return $this->idCourse;
-    }
-
-    public function setIdCourse(int $idCourse): self
-    {
-        $this->idCourse = $idCourse;
-
-        return $this;
     }
 
     public function getIdUser(): ?int
