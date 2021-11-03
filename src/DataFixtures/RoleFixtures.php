@@ -10,6 +10,7 @@ class RoleFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+        /*
         // 1
         $role = new Role();
         $role->setCaption('ROLE_USER');
@@ -30,5 +31,6 @@ class RoleFixtures extends Fixture
         $manager->persist($role);
         $manager->flush();
         $manager->clear();
+        */
     }
 }
