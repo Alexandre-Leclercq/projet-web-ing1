@@ -843,6 +843,6 @@ class __TwigTemplate_4781d5e48a4d1021fde1e33e556a3549519a6344b41ff0bde563db116a9
     </table>
     {% endfor %}
 {% endmacro %}
-", "@WebProfiler/Collector/messenger.html.twig", "D:\\Informatique\\manabi\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\messenger.html.twig");
+", "@WebProfiler/Collector/messenger.html.twig", "D:\\Informatique\\manabi\\manabi\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\messenger.html.twig");
     }
 }

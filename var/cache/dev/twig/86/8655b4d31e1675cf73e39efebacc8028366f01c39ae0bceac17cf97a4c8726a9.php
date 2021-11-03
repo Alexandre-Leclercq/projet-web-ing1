@@ -557,6 +557,6 @@ class __TwigTemplate_6210b71a98b3a6aad52889571690e0998a0dc58d2305e94f9a1a9a9792c
         {% endif %}
     </div>
 {% endblock %}
-", "@WebProfiler/Collector/http_client.html.twig", "D:\\Informatique\\manabi\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\http_client.html.twig");
+", "@WebProfiler/Collector/http_client.html.twig", "D:\\Informatique\\manabi\\manabi\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\http_client.html.twig");
     }
 }

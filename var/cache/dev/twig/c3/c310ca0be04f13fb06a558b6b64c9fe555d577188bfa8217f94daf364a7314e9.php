@@ -439,6 +439,6 @@ class __TwigTemplate_7aba0e4f92ba7e91385b41ffec8dcc0db38a432b91aea0657b48ac02bfb
     {%- set widget_class = widget_class|default('mr-2') -%}
     {{- parent() -}}
 {%- endblock radio_widget -%}
-", "tailwind_2_layout.html.twig", "D:\\Informatique\\manabi\\vendor\\symfony\\twig-bridge\\Resources\\views\\Form\\tailwind_2_layout.html.twig");
+", "tailwind_2_layout.html.twig", "D:\\Informatique\\manabi\\manabi\\vendor\\symfony\\twig-bridge\\Resources\\views\\Form\\tailwind_2_layout.html.twig");
     }
 }

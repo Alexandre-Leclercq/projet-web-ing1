@@ -1671,6 +1671,6 @@ class __TwigTemplate_fe6b96f5a90a061ae2a7b8654afe98e56b7d54ae7e059d252462bc90b56
         </tbody>
     </table>
 {% endmacro %}
-", "@Doctrine/Collector/db.html.twig", "D:\\Informatique\\manabi\\vendor\\doctrine\\doctrine-bundle\\Resources\\views\\Collector\\db.html.twig");
+", "@Doctrine/Collector/db.html.twig", "D:\\Informatique\\manabi\\manabi\\vendor\\doctrine\\doctrine-bundle\\Resources\\views\\Collector\\db.html.twig");
     }
 }
