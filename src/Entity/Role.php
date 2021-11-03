@@ -32,7 +32,7 @@ class Role
      * 
      * @ORM\Column(name="active", type="boolean", nullable=false, options={"default"="1"})
      */
-    private $active;
+    private $active = true;
 
     public function getIdRole(): ?int
     {
