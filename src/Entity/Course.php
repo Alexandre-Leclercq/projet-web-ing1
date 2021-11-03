@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use App\Entity\User;
+use App\Entity\Category;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CourseRepository;
 
 /**
- * @ORM\Table(name="Course", options={"collate"="utf8_bin"}, indexes={@ORM\Index(name="idUser", columns={"idUser"})})
+ * @ORM\Table(name="Course", options={"collate"="utf8_bin"}, indexes={@ORM\Index(name="idUser", columns={"idUser"}), @ORM\Index(name="idCategory", columns={"idCategory"})})
  * @ORM\Entity(repositoryClass=CourseRepository::class)
  */
 class Course
@@ -31,6 +32,16 @@ class Course
      * })
      */
     private $idUser;
+
+    /**
+     * @var Category
+     * 
+     * @ORM\ManyToOne(targetEntity=Category::class)
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idCategory", referencedColumnName="idCategory", nullable=false)
+     * })
+     */
+    private $idCategory;
 
     /**
      * @var string
@@ -80,6 +91,18 @@ class Course
     public function setIdUser(User $idUser): self
     {
         $this->idUser = $idUser;
+
+        return $this;
+    }
+
+    public function getIdCategory(): ?Category
+    {
+        return $this->idCategory;
+    }
+
+    public function setIdCategory(Category $idCategory): self
+    {
+        $this->idCategory = $idCategory;
 
         return $this;
     }
