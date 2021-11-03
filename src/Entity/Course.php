@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\CourseRepository;
+use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CourseRepository;
 
 /**
- * @ORM\Table(name="Course", options={"collate"="utf8_bin"})
+ * @ORM\Table(name="Course", options={"collate"="utf8_bin"}, indexes={@ORM\Index(name="idUser", columns={"idUser"})})
  * @ORM\Entity(repositoryClass=CourseRepository::class)
  */
 class Course
@@ -22,9 +23,12 @@ class Course
     private $idCourse;
 
     /**
-     * @var int
+     * @var User
      * 
-     * @ORM\Column(name="idUser", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idUser", referencedColumnName="idUser", nullable=false)
+     * })
      */
     private $idUser;
 
@@ -68,12 +72,12 @@ class Course
         return $this->idCourse;
     }
 
-    public function getIdUser(): ?int
+    public function getIdUser(): ?User
     {
         return $this->idUser;
     }
 
-    public function setIdUser(int $idUser): self
+    public function setIdUser(User $idUser): self
     {
         $this->idUser = $idUser;
 
