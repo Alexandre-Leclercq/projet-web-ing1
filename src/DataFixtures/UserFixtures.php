@@ -20,6 +20,7 @@ class UserFixtures extends Fixture
     
     public function load(ObjectManager $manager)
     {
+        /*
         $role = $manager->getRepository(Role::class)->find('1'); // ROLE_USER
         $user = new User();
         $user->setEmail('test@test.com')
@@ -32,5 +33,6 @@ class UserFixtures extends Fixture
 
         $manager->persist($user);
         $manager->flush();
+        */
     }
 }

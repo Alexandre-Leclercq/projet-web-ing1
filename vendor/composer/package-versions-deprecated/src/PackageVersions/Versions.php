@@ -166,10 +166,10 @@ final class Versions
   'symfony/phpunit-bridge' => 'v5.3.10@325aaf6302501ed3673cffbd3ba88db5949de8ae',
   'symfony/web-profiler-bundle' => 'v5.3.8@9ba1e05fdc7a46979047ba6c8949bd35e3a386a5',
   'theseer/tokenizer' => '1.2.1@34a41e998c2183e22995f158c581e7b5e755ab9e',
-  'symfony/polyfill-ctype' => '*@eedb0e4084daa89bdf13502573fd59f44370efe9',
-  'symfony/polyfill-iconv' => '*@eedb0e4084daa89bdf13502573fd59f44370efe9',
-  'symfony/polyfill-php72' => '*@eedb0e4084daa89bdf13502573fd59f44370efe9',
-  '__root__' => 'dev-main@eedb0e4084daa89bdf13502573fd59f44370efe9',
+  'symfony/polyfill-ctype' => '*@7f9456a287c52c7907b378434ae5d489f89b7d85',
+  'symfony/polyfill-iconv' => '*@7f9456a287c52c7907b378434ae5d489f89b7d85',
+  'symfony/polyfill-php72' => '*@7f9456a287c52c7907b378434ae5d489f89b7d85',
+  '__root__' => 'dev-main@7f9456a287c52c7907b378434ae5d489f89b7d85',
 );
 
     private function __construct()
