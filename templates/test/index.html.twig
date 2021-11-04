@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{% block javascripts %}
+    {{ encore_entry_script_tags('js/listCourse') }}
+{% endblock %}
 {% block title %}Hello TestController!{% endblock %}
 
 {% block body %}    
@@ -17,6 +19,7 @@
             <li><a href="#" class="text-white">Follow on Twitter</a></li>
             <li><a href="#" class="text-white">Like on Facebook</a></li>
             <li><a href="#" class="text-white">Email me</a></li>
+            <li><a href="{{ path('app_logout') }}" class="text-white">Logout</a></li>
           </ul>
         </div>
       </div>
