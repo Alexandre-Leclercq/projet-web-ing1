@@ -23,14 +23,25 @@
     background-color: rgba(79, 46, 213, 0.5);
 }
 
-// .navbar {
-//     position: fixed;
-//     top: 0;
-//     height: 60px;
-// }
+.login-container{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.login-container form{
+    padding: 10%;
+}
 
-// main {
-//     margin-top: 60px;
-//     overflow: auto;
-// }
+.login-form-left {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.login-form-right {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.profile {
+    max-height: 40px;
+}
 

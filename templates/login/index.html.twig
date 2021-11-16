@@ -1,17 +1,44 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Login{% endblock %}
-
-{% block body %}
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-    <form action="{{ path('login') }}" method="post">
-        <label for="username">Email:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password"/>
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-        <button type="submit">login</button>
-    </form>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+        {{ encore_entry_link_tags('js/app') }}
+        {% block stylesheets %}{% endblock %}
+        {{ encore_entry_script_tags('js/app') }}
+        {% block javascripts %}{% endblock %}
+    </head>
+    <body>
+        <div class="container login-container">
+            <div class="row shadow">
+                <div class="col-md-6 login-form-left d-md-block d-none bg-white p-5">
+			        <lottie-player src="{{ asset('build/lottieFiles/lf30_editor_chvynzz2.json') }}" background="transparent" speed="1" style="width:100%; height: 100%; max-width: 400px; margin: 0 auto;" loop autoplay></lottie-player>
+                </div>
+                <div class="col-md-6 bg-primary login-form-right p-5">
+                    <h3 class="text-white text-center">Welcome to <span class="text-secondary fw-bold text-nowrap">{{app_name}}</span></h3>
+                    {% if error %}
+                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                    <form action="{{ path('login') }}" method="post">
+                        <div class="form-group mb-2">
+                            <label class="text-white" for="username">Email:</label>
+                            <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}"/>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="text-white" for="password">Password:</label>
+                            <input class="form-control" type="password" id="password" name="_password"/>
+                        </div>
+                        <div class="form-group mb-2">
+                            <input class="form-check-input" type="checkbox" id="remember_me" name="_remember_me"/>
+                            <label class="form-check-label text-white" for="remember_me">Remember me</label>
+                        </div>
+                        <input class="form-control" type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        <div class="d-grid">
+                            <button class="btn btn-light rounded" type="submit">login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
