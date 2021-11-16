@@ -13,7 +13,7 @@ class CourseController extends AbstractController
      */
     public function list(): Response
     {
-        return $this->render('course/index.html.twig');
+        return $this->render('user/course/index.html.twig');
     }
 
     /**
@@ -21,7 +21,7 @@ class CourseController extends AbstractController
      */
     public function edit(): Response
     {
-        return $this->render('course/index.html.twig');
+        return $this->render('editor/course/index.html.twig');
     }
 
     /**
@@ -29,6 +29,6 @@ class CourseController extends AbstractController
      */
     public function add(): Response
     {
-        return $this->render('course/index.html.twig');
+        return $this->render('editor/course/index.html.twig');
     }
 }

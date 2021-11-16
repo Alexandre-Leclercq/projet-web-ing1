@@ -9,6 +9,131 @@
         {% block javascripts %}{% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <nav class="navbar navbar-expand-md sticky-top navbar-{{ app_color }} bg-{{ app_color }}" aria-label="Fourth navbar example">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">{{ app_name }}</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="text-primary">
+                        <i class="fas fa-bars"></i>
+                    </span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarsExample04">
+                    {% if user is defined %} 
+                        <ul class="navbar-nav mx-auto mb-2 mb-md-0">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">My courses</a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown04">
+                                    <li>
+                                        <a class="dropdown-item" href="{#{{ path('listCourses', {id: '0'}) }}#}">Category 1</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Category 2</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Category 3</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item mx-3">
+                                <a class="nav-link" href"{{ path('index') }}">My courses</a>
+                            </li>
+                        </ul>
+                    {% else %}
+                        <ul class="navbar-nav mx-auto mb-2 mb-md-0">
+                            <li class="nav-item mx-3">
+                                <a class="nav-link" href="#section1">Section 1</a>
+                            </li>
+                            <li class="nav-item mx-3">
+                                <a class="nav-link" href="#section2">Section 2</a>
+                            </li>
+                            <li class="nav-item mx-3">
+                                <a class="nav-link" href="#section3">Section 3</a>
+                            </li>
+                        </ul>
+                        <a class="mx-3 me-md-3" href="{{ path('login') }}">Login</a>
+                        <span class=""><br></span>
+                        <a class="btn btn-primary mt-2 mt-md-0" style="cursor: pointer;">
+                            <span class="text text-white">Get Started</span>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+        <main>
+            {% block main %}{% endblock %}
+        </main>
+        <footer class="footer mt-auto py-3 bg-primary">
+            <div class="container">
+                <div class="row row-cols-lg-5 py-5 my-5">
+                    <div class="col">
+                        <h5 class="text-secondary">Section</h5>
+                        <ul class="nav flex-column">
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-white">Home</a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-white">Features</a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-white">Pricing</a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-white">FAQs</a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-white">About</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col">
+                        <h5 class="text-secondary">Section</h5>
+                        <ul class="nav flex-column">
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-white">Home</a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-white">Features</a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-white">Pricing</a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-white">FAQs</a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-white">About</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col">
+                        <h5 class="text-secondary">Section</h5>
+                        <ul class="nav flex-column">
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-white">Home</a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-white">Features</a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-white">Pricing</a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-white">FAQs</a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link p-0 text-white">About</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <a href="/" class="link-dark text-decoration-none">
+                        © {{ app_name }} 2021 - {{ app_version }}
+                    </a>
+                </div>
+            </div>
+        </footer>
     </body>
 </html>

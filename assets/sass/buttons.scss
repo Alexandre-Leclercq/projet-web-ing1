@@ -1,8 +1,35 @@
-$btn-border-radius: 33px;
-.btn {
-    color: #FFFFFF;
-}
+$btn-padding-y:               10px;
+$btn-padding-x:               20px;
+$btn-font-family:             'Mulish';
+$btn-font-size:               14px;
+$btn-line-height:             18px;
 
-.btn-active {
-    color: #FFFFFF;
-}
+// $btn-padding-y-sm:            $input-btn-padding-y-sm !default;
+// $btn-padding-x-sm:            $input-btn-padding-x-sm !default;
+// $btn-font-size-sm:            $input-btn-font-size-sm !default;
+
+// $btn-padding-y-lg:            $input-btn-padding-y-lg !default;
+// $btn-padding-x-lg:            $input-btn-padding-x-lg !default;
+// $btn-font-size-lg:            $input-btn-font-size-lg !default;
+
+$btn-font-weight:             bold;
+
+$btn-link-color:              #FFFFFF;
+// $btn-link-hover-color:        $link-hover-color !default;
+// $btn-link-disabled-color:     $gray-600 !default;
+
+// Allows for customizing button radius independently from global border radius
+$btn-border-radius:           33px;
+$btn-border-radius-sm:        33px;
+$btn-border-radius-lg:        33px;
+
+// $btn-transition:              color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
+
+// $btn-hover-bg-shade-amount:       15% !default;
+// $btn-hover-bg-tint-amount:        15% !default;
+// $btn-hover-border-shade-amount:   20% !default;
+// $btn-hover-border-tint-amount:    10% !default;
+// $btn-active-bg-shade-amount:      20% !default;
+// $btn-active-bg-tint-amount:       20% !default;
+// $btn-active-border-shade-amount:  25% !default;
+// $btn-active-border-tint-amount:   10% !default;
