@@ -1,0 +1,63 @@
+# This is a basic workflow to help you get started with Actions
+name: PHP Composer
+
+# Controls when the workflow will run
+on:  
+  push:
+    tags:
+      - '*'
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      #- name: Validate composer.json and composer.lock
+      #  run: composer validate --strict
+      
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          php_version: 7.4
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: rsync deployments
+        uses: burnett01/rsync-deployments@4.1
+        with:
+          switches: -avzr --exclude=".env*"
+          path: ./
+          remote_path: /var/www/enviro/
+          remote_host: 51.159.137.72
+          remote_user: deployer
+          remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: 51.159.137.72
+          username: deployer
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/enviro; \
+            php bin/console cache:clear; \
+            ln -s /var/www/shared/jwt /var/www/enviro/config/; \
+            ln -s /var/www/shared/arp /var/www/enviro/config/; \
+            ln -s /var/www/shared/.env /var/www/enviro/; \
+            ln -s /var/www/shared/import /var/www/enviro/public/; \
+            ln -s /var/www/shared/export /var/www/enviro/public/; \
+            ln -s /var/www/shared/wipe /var/www/enviro/public/; \
+            sudo systemctl reload php7.4-fpm
