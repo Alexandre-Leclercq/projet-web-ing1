@@ -6,6 +6,9 @@ twig:
         app_name: '%env(APP_NAME)%'
         app_version: '%env(APP_VERSION)%'
         app_color: '%env(APP_COLOR)%'
+        id_role_user: '%env(ID_ROLE_USER)%'
+        id_role_editor: '%env(ID_ROLE_EDITOR)%'
+        id_role_admin: '%env(ID_ROLE_ADMIN)%'
 
 when@test:
     twig:
