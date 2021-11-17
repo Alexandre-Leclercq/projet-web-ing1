@@ -67,13 +67,6 @@ class Course
     /**
      * @var boolean
      * 
-     * @ORM\Column(name="starred", type="boolean", nullable=false, options={"default"="0"})
-     */
-    private $starred = false;
-
-    /**
-     * @var boolean
-     * 
      * @ORM\Column(name="active", type="boolean", nullable=false, options={"default"="1"})
      */
     private $active = true;
