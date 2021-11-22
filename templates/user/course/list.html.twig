@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+	<div class="container mt-5">
+		{% for course in courses %}
+			<div class="row justify-content-center mb-5">
+				<div class="card shadow" style="max-width: 675px;">
+					<div class="row g-0">
+						<div class="col-md-4 d-flex align-items-center">
+							<img src="{{ asset('build/img/test.jpg')}}" class="img-fluid rounded-start" alt="...">
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<div class="row">
+									<span class="text-muted col-md-6">{{ course.idCategory.caption }}</span>
+									<span class="text-muted col-md-4">
+										<small>3 days ago</small>
+									</span>
+									<a href="#" class="col-md-2" title="Starred">
+										<span class="text-primary">
+											<i class="far fa-star"></i>
+										</span>
+									</a>
+								</div>
+								<div class="row mt-2">
+									<h5 class="card-title">{{ course.caption }}</h5>
+								</div>
+								<div class="row">
+									<p class="card-text">{{ course.description }}</p>
+								</div>
+								<div class="row mt-2">
+									<span class="text-muted col-md-6">
+										{{ course.idUser.firstName ~ ' ' ~ course.idUser.lastName }}
+									</span>
+									<a href="" class="text-primary col-md-6">Read more
+										<i class="fas fa-arrow-right"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+
+{% endblock %}
