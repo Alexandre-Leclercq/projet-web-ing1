@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Course;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Chapter;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Course|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,6 +20,28 @@ class CourseRepository extends ServiceEntityRepository
         parent::__construct($registry, Course::class);
     }
 
+    public function getListCourse($idUser, bool $admin)
+    {
+        if ($admin) {
+            return $this->createQueryBuilder('c')
+                ->select('c as course', 'count(ch.idChapter) qtyChapter')
+                ->leftjoin(Chapter::class, 'ch', 'with', 'ch.idCourse = c.idCourse')
+                ->orderBy('c.idCourse', 'ASC')
+                ->groupBy('c.idCourse')
+                ->getQuery()
+                ->getResult();
+        } else {
+            return $this->createQueryBuilder('c')
+                ->select('c as course', 'count(ch.idChapter) qtyChapter')
+                ->leftjoin(Chapter::class, 'ch', 'with', 'ch.idCourse = c.idCourse')
+                ->where('c.idUser = :user')
+                ->setParameter('user', $idUser)
+                ->orderBy('c.idCourse', 'ASC')
+                ->groupBy('c.idCourse')
+                ->getQuery()
+                ->getResult();
+        }
+    }
     // /**
     //  * @return Course[] Returns an array of Course objects
     //  */

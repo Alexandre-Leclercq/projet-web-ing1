@@ -9,3 +9,5 @@ import '@fortawesome/fontawesome-free/js/brands';
 import '@lottiefiles/lottie-player';
 
 const $ = require('jquery');
+
+import 'datatables';

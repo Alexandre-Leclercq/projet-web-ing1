@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\User;
 
 use App\Repository\CategoryRepository;
 use App\Repository\CourseRepository;
@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
-class CourseController extends AbstractController
+class UserController extends AbstractController
 {
     /**
      * @var Security
@@ -28,30 +28,18 @@ class CourseController extends AbstractController
     }
 
     /**
-     * @Route("/course/list/{id}", name="listCourse",  requirements={"id"="\d+"})
+     * @Route("/course/list/{id?}", name="listCourse", requirements={"id"="\d+"})
      */
-    public function list(CourseRepository $courseRepository): Response
+    public function list(CourseRepository $courseRepository, ?int $id = null): Response
     {
-        $courses = $courseRepository->findBy(['active' => '1']);
+        if(is_null($id))
+            $courses = $courseRepository->findBy(['active' => '1']);
+        else
+            $courses = $courseRepository->findBy(['active' => '1', 'idCategory' => $id]);
+            
         $user = $this->security->getUser();
         $categories = $this->categoryRepository->findBy(['active' => true]);
         //dd($courses);
-        return $this->render('user/course/index.html.twig', ['user' => $user, 'categories' => $categories, 'courses' => $courses]);
-    }
-
-    /**
-     * @Route("/course/edit", name="editCourse")
-     */
-    public function edit(): Response
-    {
-        return $this->render('editor/course/index.html.twig');
-    }
-
-    /**
-     * @Route("/course/add", name="addCourse")
-     */
-    public function add(): Response
-    {
-        return $this->render('editor/course/index.html.twig');
+        return $this->render('user/course/list.html.twig', ['user' => $user, 'categories' => $categories, 'courses' => $courses]);
     }
 }

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+    <script>
+        const route = "{{ path('getCourseJson') }}";
+    </script>
+    {{ encore_entry_script_tags('js/listCourse') }}
+{% endblock %}
+{% block main %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-xl col-lg">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary col-6">LIST COURSES</h6> 
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="table-responsive" >
+                                <table id="listCourse" class="table cell-border table-striped table-xl w-100">
+                                    <thead >
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>No. chapter</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>		
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
