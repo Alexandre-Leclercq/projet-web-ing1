@@ -34,22 +34,10 @@ class CourseController extends AbstractController
      */
     public function list(CourseRepository $courseRepository): Response
     {
-        $user = $this->security;
-        $categories = $this->categoryRepository;
-        return $this->render('editor/course/list.html.twig', ['user' => $user, 'categories' => $categories]);
-    }
-
-    /**
-     * @Route("/editor/course/getJson", name="getCourseJson", methods={"GET"})
-     */
-    public function courseJson(CourseRepository $courseRepository, AjaxResponseJson $ajaxResponseJson): JsonResponse
-    {
+        //global
         $user = $this->security->getUser();
-        dd($user->getIdRole());
-        if ($user->getIdRole == $this->getParameter('user.idRole.admin'))
-            $courses = $courseRepository->getListCourse($user, true);
-        else
-            $courses = $courseRepository->getListCourse($user, false);
-        return new JsonResponse($ajaxResponseJson->listCourseEditor($courses));
+        $categories = $this->categoryRepository->findBy(['active' => true]);
+
+        return $this->render('editor/course/list.html.twig', ['user' => $user, 'categories' => $categories]);
     }
 }

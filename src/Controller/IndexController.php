@@ -32,10 +32,11 @@ class IndexController extends AbstractController
      */
     public function index(): Response
     {
+        //global
         $user = $this->security->getUser(); // get current user login
-
         $categories = $this->categoryRepository->findBy(['active' => true]);
-        if(is_null($user)){
+
+        if (is_null($user)) {
             return $this->render('index.html.twig');
         } else {
             return $this->render('user/index.html.twig', [

@@ -32,14 +32,15 @@ class UserController extends AbstractController
      */
     public function list(CourseRepository $courseRepository, ?int $id = null): Response
     {
-        if(is_null($id))
+        //global
+        $user = $this->security->getUser();
+        $categories = $this->categoryRepository->findBy(['active' => true]);
+
+        if (is_null($id))
             $courses = $courseRepository->findBy(['active' => '1']);
         else
             $courses = $courseRepository->findBy(['active' => '1', 'idCategory' => $id]);
-            
-        $user = $this->security->getUser();
-        $categories = $this->categoryRepository->findBy(['active' => true]);
-        //dd($courses);
+
         return $this->render('user/course/list.html.twig', ['user' => $user, 'categories' => $categories, 'courses' => $courses]);
     }
 }

@@ -2,7 +2,8 @@
 
 namespace App\Service;
 
-class AjaxResponseJson {
+class AjaxResponseJson
+{
 
     private function formatActionCourse($idCourse, $active, $qtyChapter)
     {
@@ -21,7 +22,7 @@ class AjaxResponseJson {
                                 </span>
                             </a>&nbsp;';
             // see button
-            if($qtyChapter <= 0){
+            if ($qtyChapter <= 0) {
                 $action .= '<a class="btn btn-sm btn-primary disabled" target="_blank" href="course.php?idCourse=' . $idCourse . '" title="Voir"> 
                             <span class="icon text-white">
                                 <i class="fas fa-eye"></i>
@@ -70,18 +71,18 @@ class AjaxResponseJson {
      * @return string
      * Return json data for the datatable
      */
-    public function listCourseEditor($courses)
+    public function listCourseEditor($courses): array
     {
         $tmp = [];
-        foreach($courses as $course){
+        foreach ($courses as $course) {
             $tmp[] = [
-                'id' => $course->getIdCourse(),
-                'caption' => $course->getCaption(),
-                'category' => is_null($course->getIdCategory()) ? '' : $course->getIdCategory()->getCaption(),
-                'qtyChapter' => $course->getQtyChapter(),
-                'action' => $this->formatActionCourse($course->getIdCourse(), $course->getActive(), 0)
+                'id' => $course['course']->getIdCourse(),
+                'caption' => $course['course']->getCaption(),
+                'category' => is_null($course['course']->getIdCategory()) ? '' : $course['course']->getIdCategory()->getCaption(),
+                'qtyChapter' => $course['qtyChapter'],
+                'action' => $this->formatActionCourse($course['course']->getIdCourse(), $course['course']->getActive(), 0)
             ];
         }
-        return json_encode($tmp);
+        return $tmp;
     }
 }
