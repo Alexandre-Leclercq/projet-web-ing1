@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Register</title>
+        {{ encore_entry_link_tags('js/app') }}
+        {{ encore_entry_script_tags('js/app') }}
+    </head>
+    <body>
+        <div class="container login-container">
+            <div class="row justify-content-center">
+                <div class="bg-white p-5 col-md-6 shadow rounded">
+                    <h3 class="text-primary text-center">Welcome to <span class="text-black fw-bold text-nowrap">{{app_name}}</span></h3>
+                    {% for flashError in app.flashes('verify_email_error') %}
+                        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+                    {% endfor %}
+                    {{ form_start(registrationForm) }}
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(registrationForm.firstName) }}</div>
+                            <div class="col-md-6">{{ form_row(registrationForm.lastName) }}</div>
+                        </div>
+                        {{ form_row(registrationForm.email) }}
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3">
+                                {{ form_label(registrationForm.plainPassword.first) }}
+                                {{ form_widget(registrationForm.plainPassword.first) }}
+                                {{ form_errors(registrationForm.plainPassword.first) }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form_label(registrationForm.plainPassword.second) }}
+                                {{ form_widget(registrationForm.plainPassword.second) }}
+                                {{ form_errors(registrationForm.plainPassword.second) }}
+                            </div>
+                            <div class="text-muted mb-3">
+                                <p>Password must contain 8 or more characters with uppercase, lowercase, number and special character</p>
+                            </div>
+                        </div>
+                        {{ form_row(registrationForm.agreeTerms) }}
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary rounded">Register</button>
+                        </div>
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
