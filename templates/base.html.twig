@@ -11,7 +11,7 @@
     <body>
         <nav class="navbar navbar-expand-md sticky-top navbar-{{ app_color }} bg-{{ app_color }}" aria-label="Fourth navbar example">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">{{ app_name }}</a>
+                <a class="navbar-brand" href="{{ path('index') }}">{{ app_name }}</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="text-primary">
                         <i class="fas fa-bars"></i>
@@ -28,10 +28,14 @@
                                         <a class="dropdown-item" href="{{ path('listCourse', {id: category.idCategory}) }}">{{ category.caption }}</a>
                                     </li>
                                 {% endfor %}
+                                    <hr>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ path('listCourse', {id: 0}) }}">See all</a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item me-3">
-                                <a class="nav-link" href"{{ path('index') }}">My courses</a>
+                                <a class="nav-link" href="{{ path('index') }}">My courses</a>
                             </li>
                             {% if user.idRole.idRole in [id_role_editor, id_role_admin] %}
                             <li class="nav-item dropdown me-3">
@@ -57,7 +61,7 @@
                         <ul class="navbar-nav me-5 mb-2 mb-md-0">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle p-0" href="#" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="fw-bold me-3">{{ user.firstName ~ user.lastName }}</span>
+                                <span class="fw-bold me-3">{{ user.firstName ~ ' ' ~ user.lastName }}</span>
                                 <img class="profile rounded" src="{{ asset('build/img/placeholder_profile.png') }}" alt="profile" title="picture profile">
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdown">
@@ -161,7 +165,7 @@
                     </div>
                 </div>
                 <div class="row text-center">
-                    <a href="/" class="link-dark text-decoration-none">
+                    <a href="{{ path('index') }}" class="link-dark text-decoration-none">
                         © {{ app_name }} 2021 - {{ app_version }}
                     </a>
                 </div>
