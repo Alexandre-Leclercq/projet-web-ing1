@@ -33,7 +33,7 @@
                                 {% endfor %}
                                     <hr>
                                     <li>
-                                        <a class="dropdown-item" href="{{ path('listCourse', {id: 0}) }}">See all</a>
+                                        <a class="dropdown-item" href="{{ path('listCourse') }}">See all</a>
                                     </li>
                                 </ul>
                             </li>
@@ -65,7 +65,11 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle p-0" href="#" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="fw-bold me-3">{{ user.firstName ~ ' ' ~ user.lastName }}</span>
-                                <img class="profile rounded" src="{{ asset('build/img/placeholder_profile.png') }}" alt="profile" title="picture profile">
+                                {% if user.pictureFileLink is not null %}
+                                    <img class="profile rounded" src="{{ file_dir ~ '/' ~ user.pictureFileLink }}" alt="profile" title="picture profile">
+                                {% else %}
+                                    <img class="profile rounded" src="{{ asset('build/img/placeholder_profile.png') }}" alt="profile" title="picture profile">   
+                                {% endif %}
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdown">
                                     <li>

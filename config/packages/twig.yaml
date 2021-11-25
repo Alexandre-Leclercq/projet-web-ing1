@@ -9,6 +9,7 @@ twig:
         id_role_user: '%env(ID_ROLE_USER)%'
         id_role_editor: '%env(ID_ROLE_EDITOR)%'
         id_role_admin: '%env(ID_ROLE_ADMIN)%'
+        file_dir: '%env(APP_FILE_DIR)%'
 
 when@test:
     twig:
