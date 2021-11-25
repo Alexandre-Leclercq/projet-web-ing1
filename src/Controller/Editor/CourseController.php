@@ -2,14 +2,13 @@
 
 namespace App\Controller\Editor;
 
-use App\Repository\CategoryRepository;
+use App\Entity\Course;
 use App\Repository\CourseRepository;
-use App\Service\AjaxResponseJson;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Repository\CategoryRepository;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CourseController extends AbstractController
 {
@@ -30,7 +29,7 @@ class CourseController extends AbstractController
     }
 
     /**
-     * @Route("/editor/course/list", name="editorListCourse")
+     * @Route("/editor/course/list", name="editor.course.list")
      */
     public function list(CourseRepository $courseRepository): Response
     {
@@ -38,6 +37,9 @@ class CourseController extends AbstractController
         $user = $this->security->getUser();
         $categories = $this->categoryRepository->findBy(['active' => true]);
 
-        return $this->render('editor/course/list.html.twig', ['user' => $user, 'categories' => $categories]);
+        return $this->render('editor/course/list.html.twig', [
+            'user' => $user, 
+            'categories' => $categories
+        ]);
     }
 }

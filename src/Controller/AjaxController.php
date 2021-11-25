@@ -2,15 +2,30 @@
 
 namespace App\Controller;
 
-use App\Repository\CourseRepository;
 use App\Service\AjaxResponseJson;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\CourseRepository;
+use Doctrine\Persistence\ManagerRegistry; 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AjaxController extends AbstractController
 {
+    /**
+     * @var ObjectManager
+     */
+    private $em;
+
+    public function __construct(ManagerRegistry $managerRegistry)
+    {
+        $this->em = $managerRegistry->getManager();
+    }
+    
+    
+
     /**
      * @Route("/ajax/course/getJson", name="getCourseJson")
      */
@@ -22,5 +37,18 @@ class AjaxController extends AbstractController
         else
             $courses = $courseRepository->getListCourse($user, false);
         return new JsonResponse($ajaxResponseJson->listCourseEditor($courses));
+    }
+
+    /**
+     * @Route("/ajax/course/changeActive", name="changeActiveCourse")
+     */
+    public function changeActiveCourse(Request $request, CourseRepository $courseRepository): Response
+    {
+        $course = $courseRepository->find($request->request->get('id'));
+        $course->setActive(!$course->getActive());
+        $this->em->persist($course);
+        $this->em->flush();
+        $this->em->clear();
+        return new Response('');
     }
 }

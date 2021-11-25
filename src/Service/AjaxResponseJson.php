@@ -2,12 +2,21 @@
 
 namespace App\Service;
 
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 class AjaxResponseJson
 {
+    private $router;
+
+    public function __construct(UrlGeneratorInterface $router)
+    {
+        $this->router = $router;
+    }
 
     private function formatActionCourse($idCourse, $active, $qtyChapter)
     {
         try {
+            $listChapter = $this->router->generate('editor.chapter.list', ['idCourse' => $idCourse]);
             $action = '<div class="btn-group" role="group" aria-label="Action button">';
             // edit button
             $action .= '<a class="btn btn-sm  btn-primary" href="edit.php?idCourse=' . $idCourse . '" title="Modifier"> 
@@ -42,7 +51,7 @@ class AjaxResponseJson
                             </span>
                         </a>&nbsp;';
             // list chapter button
-            $action .= '<a class="btn btn-sm  btn-primary" title="Liste des chapitres" href="listChapter.php?idCourse=' . $idCourse . '"> 
+            $action .= '<a class="btn btn-sm  btn-primary" title="Liste des chapitres" href="' . $listChapter . '"> 
                             <span class="icon text-white">
                                 <i class="fas fa-list"></i>
                             </span>
@@ -80,7 +89,7 @@ class AjaxResponseJson
                 'caption' => $course['course']->getCaption(),
                 'category' => is_null($course['course']->getIdCategory()) ? '' : $course['course']->getIdCategory()->getCaption(),
                 'qtyChapter' => $course['qtyChapter'],
-                'action' => $this->formatActionCourse($course['course']->getIdCourse(), $course['course']->getActive(), 0)
+                'action' => $this->formatActionCourse($course['course']->getIdCourse(), $course['course']->getActive(), $course['qtyChapter'])
             ];
         }
         return $tmp;
