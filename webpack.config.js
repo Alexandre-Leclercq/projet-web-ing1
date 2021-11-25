@@ -35,6 +35,7 @@ Encore
     .addEntry('js/login', './assets/screen/login.js')
     .addEntry('js/listCourse', './assets/screen/course/list.js')
     .addEntry('js/listUser', './assets/screen/user/list.js')
+    .addEntry('js/listChapter', './assets/screen/chapter/list.js')
 
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

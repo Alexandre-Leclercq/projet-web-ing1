@@ -19,6 +19,14 @@ class ChapterRepository extends ServiceEntityRepository
         parent::__construct($registry, Chapter::class);
     }
 
+    public function getListChapter($idCourse)
+    {
+        return $this->createQueryBuilder('c')
+        ->where('idCourse = :idCourse')
+        ->setParameter('idCourse', $idCourse)
+        ->getQuery()
+        ->getResult();
+    }
     // /**
     //  * @return Chapter[] Returns an array of Chapter objects
     //  */

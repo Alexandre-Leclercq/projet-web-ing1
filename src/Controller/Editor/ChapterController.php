@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class CourseController extends AbstractController
+class ChapterController extends AbstractController
 {
     /**
      * @var Security
@@ -29,17 +29,18 @@ class CourseController extends AbstractController
     }
 
     /**
-     * @Route("/editor/course/list", name="editor.course.list")
+     * @Route("/editor/chapter/list/{idCourse}", name="editor.chapter.list", requirements={"idCourse"="\d+"})
      */
-    public function list(): Response
+    public function list(Course $course): Response
     {
         //global
         $user = $this->security->getUser();
         $categories = $this->categoryRepository->findBy(['active' => true]);
 
-        return $this->render('editor/course/list.html.twig', [
+        return $this->render('editor/chapter/list.html.twig', [
             'user' => $user, 
-            'categories' => $categories
+            'categories' => $categories, 
+            'course' => $course
         ]);
     }
 }

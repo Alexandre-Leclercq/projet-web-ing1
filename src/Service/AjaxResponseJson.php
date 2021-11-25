@@ -94,4 +94,14 @@ class AjaxResponseJson
         }
         return $tmp;
     }
+
+        /**
+     * @var Chapter[] $chapters
+     * @return string
+     * Return json data for the datatable
+     */
+    public function listChapterEditor($chapter): array
+    {
+
+    }
 }

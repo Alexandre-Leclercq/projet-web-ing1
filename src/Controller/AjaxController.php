@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\AjaxResponseJson;
 use App\Repository\CourseRepository;
+use App\Repository\ChapterRepository;
 use Doctrine\Persistence\ManagerRegistry; 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -50,5 +51,15 @@ class AjaxController extends AbstractController
         $this->em->flush();
         $this->em->clear();
         return new Response('');
+    }
+
+    /**
+     * @Route("/ajax/chapter/getJson/{idCourse}", name="getChapterJson", requirements={"idCourse"="\d+"})
+     */
+    public function chapterJson(int $idCourse, ChapterRepository $chapterRepository, AjaxResponseJson $ajaxResponseJson): JsonResponse
+    {
+        $chapters = $chapterRepository->getListChapter($idCourse);
+        dd($chapters);
+        return new JsonResponse($ajaxResponseJson->listChapterEditor($chapters));
     }
 }
