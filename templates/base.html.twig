@@ -2,11 +2,14 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}{{ app_name }}{% endblock %}</title>
         {{ encore_entry_link_tags('js/app') }}
         {% block stylesheets %}{% endblock %}
         {{ encore_entry_script_tags('js/app') }}
         {% block javascripts %}{% endblock %}
+        <link rel="icon" href="{{ asset('build/img/favicon.ico') }}" type="image/png">
     </head>
     <body>
         <nav class="navbar navbar-expand-md sticky-top navbar-{{ app_color }} bg-{{ app_color }}" aria-label="Fourth navbar example">
@@ -88,7 +91,7 @@
                         </ul>
                         <a class="mx-3 me-md-3" href="{{ path('login') }}">Login</a>
                         <span class=""><br></span>
-                        <a class="btn btn-primary mt-2 mt-md-0" style="cursor: pointer;">
+                        <a class="btn btn-primary mt-2 mt-md-0" href="{{ path('app_register') }}" style="cursor: pointer;">
                             <span class="text text-white">Get Started</span>
                         </a>
                     {% endif %}
