@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\Admin\UserType;
 use App\Services\FileUploader;
 use App\Repository\CategoryRepository;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -40,11 +41,13 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/user/list", name="admin.user.list")
-     * @return Response
      */
-    public function list()
+    public function list(UserRepository $userRepository): Response
     {
-        return new Response('');
+        return $this->render('admin/user/list.html.twig', [
+            'user' => $this->security->getUser(), 
+            'categories' => $this->categoryRepository->findBy(['active' => true])
+        ]);
     }
 
     /**
@@ -61,13 +64,16 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $userPasswordHasherInterface->hashPassword(
-                $user,
-                $form->get('plainPassword')->getData()
-            );
-            //dd($fileUploader->uploadFile($form->get('picture')->getData()));
-            $filename = $fileUploader->uploadFile($form->get('picture')->getData());
-            $user->setPictureFilelink($filename);
+            if(!is_null($form->get('plainPassword')->getData())){
+                $userPasswordHasherInterface->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                );
+            }
+            if(!is_null($form->get('picture')->getData())){
+                $filename = $fileUploader->uploadFile($form->get('picture')->getData());
+                $user->setPictureFilelink($filename);
+            }
             $this->em->persist($user);
             $this->em->flush();
             return $this->redirectToRoute('admin.user.list');
@@ -78,67 +84,4 @@ class UserController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-
-    // /**
-    //  * @param Request $request
-    //  * @return Response
-    //  */
-    // public function add(Request $request): Response
-    // {   
-    //     //try{
-    //         $cpuManufacturer = new CpuManufacturer();
-    //         $form = $this->createForm(AddCpuManufacturerType::class, $cpuManufacturer);
-    //         $form->handleRequest($request);
-    //         if($form->isSubmitted() && $form->isValid()){
-    //             $this->em->persist($form->getData());
-    //             $this->em->flush();
-    //             $this->addFlash('success', $this->getParameter('message.admin.cpuManufacturer.add'));
-    //             return $this->redirectToRoute('cpuManufacturer.list');
-    //         }
-    //         $screen = $this->screenRepository->find($this->getParameter('screen.admin.cpuManufacturer.id'));
-    //         $menus = $this->userPermission->getMenu();
-    //         return $this->render('admin/cpuManufacturer/edit.html.twig', [
-    //             'current_menu_id' => is_null($screen->getIdMenu()) ? 0 : $screen->getIdMenu()->getIdMenu(),
-    //             'current_screen_id' => $screen->getIdScreen(),
-    //             'page_name' => $this->getParameter('page.admin.cpuManufacturer.list.title'),
-    //             'user' => $this->security->getUser(),
-    //             'site' => $request->getSession()->get('site'),
-    //             'menus' => $menus,
-    //             'siteNumber' => $request->getSession()->get('siteNumber'),
-    //             'form' => $form->createView()
-    //         ]);
-    // }
-
-    // /**
-    //  * @param CpuManufacturer $cpuManufacturer
-    //  * @param Request $request
-    //  * @return Response
-    //  */
-    // public function duplicate(CpuManufacturer $cpuManufacturer, Request $request): Response
-    // {   
-    //     //try{
-    //         $cpuManufacturerDuplicate = (new CpuManufacturer())->setCaption($cpuManufacturer->getCaption().$this->getParameter('app.duplicate.caption'))
-    //             ->setComment($cpuManufacturer->getComment())
-    //             ->setActive($cpuManufacturer->getActive());
-    //         $form = $this->createForm(AddCpuManufacturerType::class, $cpuManufacturerDuplicate);
-    //         $form->handleRequest($request);
-    //         if($form->isSubmitted() && $form->isValid()){
-    //             $this->em->persist($form->getData());
-    //             $this->em->flush();
-    //             $this->addFlash('success', $this->getParameter('message.admin.cpuManufacturer.add'));
-    //             return $this->redirectToRoute('cpuManufacturer.list');
-    //         }
-    //         $screen = $this->screenRepository->find($this->getParameter('screen.admin.cpuManufacturer.id'));
-    //         $menus = $this->userPermission->getMenu();
-    //         return $this->render('admin/cpuManufacturer/edit.html.twig', [
-    //             'current_menu_id' => is_null($screen->getIdMenu()) ? 0 : $screen->getIdMenu()->getIdMenu(),
-    //             'current_screen_id' => $screen->getIdScreen(),
-    //             'page_name' => $this->getParameter('page.admin.cpuManufacturer.list.title'),
-    //             'user' => $this->security->getUser(),
-    //             'site' => $request->getSession()->get('site'),
-    //             'menus' => $menus,
-    //             'siteNumber' => $request->getSession()->get('siteNumber'),
-    //             'form' => $form->createView()
-    //         ]);
-    // }
 }

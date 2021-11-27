@@ -4,6 +4,7 @@ namespace App\Form\Admin;
 
 use App\Entity\Role;
 use App\Entity\User;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -28,7 +29,6 @@ class UserType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
-                'options' => ['attr' => ['class' => 'form-control-solid']],
                 'required' => false,
                 'constraints' => [
                     new Regex(
@@ -41,7 +41,11 @@ class UserType extends AbstractType
             ])
             ->add('idRole', EntityType::class, [
                 'class' => Role::class,
-                'choice_label' => 'caption',
+                'query_builder' => function (EntityRepository $er){
+                    return $er->createQueryBuilder('r')
+                        ->andWhere('r.active = 1');
+                },
+                'choice_label' => 'externCaption',
                 'required' => true,
                 'multiple' => false,
                 'expanded' => false,
@@ -61,7 +65,6 @@ class UserType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid image',
                     ])
                 ],
-
             ])
             ->add('dateLog', DateTimeType::class, [
                 'required' => false,
