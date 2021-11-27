@@ -31,20 +31,20 @@ class AjaxResponseJson
                             </a>&nbsp;';
             // see button
             if ($qtyChapter <= 0) {
-                $action .= '<a class="btn btn-sm btn-primary disabled" target="_blank" href="course.php?idCourse=' . $idCourse . '" title="Voir"> 
+                $action .= '<a class="btn btn-sm btn-primary disabled" target="_blank" href="'.$this->router->generate('editor.course.see').'" title="Voir"> 
                             <span class="icon text-white">
                                 <i class="fas fa-eye"></i>
                             </span>
                         </a>&nbsp;';
             } else {
-                $action .= '<a class="btn btn-sm btn-primary" target="_blank" href="course.php?idCourse=' . $idCourse . '" title="Voir"> 
+                $action .= '<a class="btn btn-sm btn-primary" target="_blank" href="'.$this->router->generate('editor.course.see').'" title="Voir"> 
                             <span class="icon text-white">
                                 <i class="fas fa-eye"></i>
                             </span>
                         </a>&nbsp;';
             }
             // add chapter button
-            $action .= '<a class="btn btn-sm  btn-primary" title="Ajouter un chapitre" href="editChapter.php?idCourse=' . $idCourse . '"> 
+            $action .= '<a class="btn btn-sm  btn-primary" title="Ajouter un chapitre" href="'.$this->router->generate('editor.chapter.add').'"> 
                             <span class="icon text-white">
                                 <i class="fas fa-plus"></i>
                             </span>
@@ -103,13 +103,13 @@ class AjaxResponseJson
     try {
         $action = '<div class="btn-group" role="group" aria-label="Action button">';
         // edit button
-        $action .= '<a class="btn btn-sm  btn-primary" href="editChapter.php?idChapter=' . $idChapter . '" title="Modifier"> 
+        $action .= '<a class="btn btn-sm  btn-primary" href="'.$this->router->generate('editor.chapter.add').'" title="Modifier"> 
                                 <span class="icon text-white">
                                     <i class="fas fa-edit"></i> 
                                 </span>
                             </a>&nbsp;';
         // duplicat button
-        $action .= '<a class="btn btn-sm  btn-primary" href="editChapter.php?idChapter=' . $idChapter . '&duplicat" title="Dupliquer"> 
+        $action .= '<a class="btn btn-sm  btn-primary" href="'.$this->router->generate('editor.chapter.duplicate').'&duplicat" title="Dupliquer"> 
                             <span class="icon text-white">
                                 <i class="fas fa-clone"></i>
                             </span>

@@ -3,8 +3,10 @@
 namespace App\Controller\Editor;
 
 use App\Entity\Course;
+use App\Services\FileUploader;
 use App\Repository\CourseRepository;
 use App\Repository\CategoryRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,5 +44,21 @@ class ChapterController extends AbstractController
             'categories' => $categories, 
             'course' => $course
         ]);
+    }
+
+    /**
+     * @Route("/editor/chapter/add", name="editor.chapter.add")
+     */
+    public function add(Request $request, FileUploader $fileUploader)
+    {
+
+    }
+
+    /**
+     * @Route("/editor/chapter/duplicate", name="editor.chapter.duplicate")
+     */
+    public function duplicate(Request $request, FileUploader $fileUploader)
+    {
+
     }
 }

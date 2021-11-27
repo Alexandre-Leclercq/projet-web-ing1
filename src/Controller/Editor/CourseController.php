@@ -144,4 +144,12 @@ class CourseController extends AbstractController
             'typeForm' => 'Duplicate '.$courseDuplicate->getCaption()
         ]);
     }
+
+    /**
+     * @route("editor/course/see", name="editor.course.see")
+     */
+    public function seeCourse(): Response
+    {
+        return new Response('');
+    }
 }
