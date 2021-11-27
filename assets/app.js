@@ -11,3 +11,5 @@ import '@lottiefiles/lottie-player';
 const $ = require('jquery');
 
 import 'datatables';
+
+import 'datatables.net-bs5'
