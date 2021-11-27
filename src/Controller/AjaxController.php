@@ -59,7 +59,19 @@ class AjaxController extends AbstractController
     public function chapterJson(int $idCourse, ChapterRepository $chapterRepository, AjaxResponseJson $ajaxResponseJson): JsonResponse
     {
         $chapters = $chapterRepository->getListChapter($idCourse);
-        dd($chapters);
         return new JsonResponse($ajaxResponseJson->listChapterEditor($chapters));
+    }
+
+    /**
+     * @Route("/ajax/course/changeActiveChapter", name="changeActiveChapter")
+     */
+    public function changeActiveChapter(Request $request, ChapterRepository $chapterRepository): Response
+    {
+        $chapter = $chapterRepository->find($request->request->get('id'));
+        $chapter->setActive(!$chapter->getActive());
+        $this->em->persist($chapter);
+        $this->em->flush();
+        $this->em->clear();
+        return new Response('');
     }
 }

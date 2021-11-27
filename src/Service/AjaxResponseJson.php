@@ -16,16 +16,15 @@ class AjaxResponseJson
     private function formatActionCourse($idCourse, $active, $qtyChapter)
     {
         try {
-            $listChapter = $this->router->generate('editor.chapter.list', ['idCourse' => $idCourse]);
             $action = '<div class="btn-group" role="group" aria-label="Action button">';
             // edit button
-            $action .= '<a class="btn btn-sm  btn-primary" href="edit.php?idCourse=' . $idCourse . '" title="Modifier"> 
+            $action .= '<a class="btn btn-sm  btn-primary" href="'. $this->router->generate('editor.course.edit', ['id' => $idCourse]) .'" title="Modifier"> 
                                     <span class="icon text-white">
                                         <i class="fas fa-edit"></i> 
                                     </span>
                                 </a>&nbsp;';
             // duplicat button
-            $action .= '<a class="btn btn-sm  btn-primary" href="edit.php?idCourse=' . $idCourse . '&duplicat" title="Dupliquer"> 
+            $action .= '<a class="btn btn-sm  btn-primary" href="'.$this->router->generate('editor.course.duplicate', ['id' => $idCourse]).'" title="Dupliquer"> 
                                 <span class="icon text-white">
                                     <i class="fas fa-clone"></i>
                                 </span>
@@ -51,7 +50,7 @@ class AjaxResponseJson
                             </span>
                         </a>&nbsp;';
             // list chapter button
-            $action .= '<a class="btn btn-sm  btn-primary" title="Liste des chapitres" href="' . $listChapter . '"> 
+            $action .= '<a class="btn btn-sm  btn-primary" title="Liste des chapitres" href="' . $this->router->generate('editor.chapter.list', ['idCourse' => $idCourse]) . '"> 
                             <span class="icon text-white">
                                 <i class="fas fa-list"></i>
                             </span>
@@ -67,7 +66,7 @@ class AjaxResponseJson
                                 <span class="icon text-white">
                                     <i class="fas fa-times"></i>
                                 </span>
-                            </a>&nbsp;';
+                            </a>&nbsp;</div>';
             }
             return $action;
         } catch (\Exception $e) {
@@ -82,26 +81,78 @@ class AjaxResponseJson
      */
     public function listCourseEditor($courses): array
     {
-        $tmp = [];
-        foreach ($courses as $course) {
-            $tmp[] = [
-                'id' => $course['course']->getIdCourse(),
-                'caption' => $course['course']->getCaption(),
-                'category' => is_null($course['course']->getIdCategory()) ? '' : $course['course']->getIdCategory()->getCaption(),
-                'qtyChapter' => $course['qtyChapter'],
-                'action' => $this->formatActionCourse($course['course']->getIdCourse(), $course['course']->getActive(), $course['qtyChapter'])
-            ];
+        try {
+            $tmp = [];
+            foreach ($courses as $course) {
+                $tmp[] = [
+                    'id' => $course['course']->getIdCourse(),
+                    'caption' => $course['course']->getCaption(),
+                    'category' => is_null($course['course']->getIdCategory()) ? '' : $course['course']->getIdCategory()->getCaption(),
+                    'qtyChapter' => $course['qtyChapter'],
+                    'action' => $this->formatActionCourse($course['course']->getIdCourse(), $course['course']->getActive(), $course['qtyChapter'])
+                ];
+            }
+            return $tmp;
+        } catch(\Exception $e) {
+            [];
         }
-        return $tmp;
     }
 
-        /**
+    function formatActionChapter($active, $idChapter)
+{
+    try {
+        $action = '<div class="btn-group" role="group" aria-label="Action button">';
+        // edit button
+        $action .= '<a class="btn btn-sm  btn-primary" href="editChapter.php?idChapter=' . $idChapter . '" title="Modifier"> 
+                                <span class="icon text-white">
+                                    <i class="fas fa-edit"></i> 
+                                </span>
+                            </a>&nbsp;';
+        // duplicat button
+        $action .= '<a class="btn btn-sm  btn-primary" href="editChapter.php?idChapter=' . $idChapter . '&duplicat" title="Dupliquer"> 
+                            <span class="icon text-white">
+                                <i class="fas fa-clone"></i>
+                            </span>
+                        </a>&nbsp;';
+        if ($active) {
+            $action .= '<a class="btn btn-sm  btn-primary activeButton" value="1" title="Actif"> 
+                            <span class="icon text-white">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </a>&nbsp;';
+        } else {
+            $action .= '<a class="btn btn-sm  btn-primary activeButton" value="0" title="Actif"> 
+                            <span class="icon text-white">
+                                <i class="fas fa-times"></i>
+                            </span>
+                        </a>&nbsp;';
+        }
+        return $action;
+    } catch (\Exception $e) {
+        return null;
+    }
+}
+    
+    /**
      * @var Chapter[] $chapters
      * @return string
      * Return json data for the datatable
      */
-    public function listChapterEditor($chapter): array
+    public function listChapterEditor($chapters): array
     {
-
+        try {
+            $tmp = [];
+            foreach ($chapters as $chapter) {
+                $tmp[] = [
+                    'id' => $chapter->getIdChapter(),
+                    'caption' => $chapter->getCaption(),
+                    'step' => $chapter->getStep(),
+                    'action' => $this->formatActionChapter($chapter->getActive(), $chapter->getIdChapter())
+                ];
+            }
+            return $tmp;
+        } catch(\Exception $e) {
+            [];
+        }
     }
 }

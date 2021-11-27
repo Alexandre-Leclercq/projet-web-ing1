@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block javascripts %}
 	<script>
-		const routeGetChapter = "{{ path('getChapterJson', {idCourse: ".{{course.id}}."}) }}";	
+		const routeGetChapter = "{{ path('getChapterJson', {idCourse: course.idCourse}) }}";
+		const routeChangeActive = "{{ path('changeActiveChapter') }}";	
 	</script>
 	{{ encore_entry_script_tags('js/listChapter') }}
 {% endblock %}
 {% block main %}
-	<div class="container mt-5">
+	<div class="container my-5">
 		<div class="row">
 			<div class="col-xl col-lg">
 				<div class="card shadow mb-4">
@@ -21,7 +22,7 @@
 										<thead>
 											<tr>
 												<th>Name</th>
-												<th>Number</th>
+												<th>Chapter's number</th>
 												<th>Actions</th>
 											</tr>
 										</thead>
