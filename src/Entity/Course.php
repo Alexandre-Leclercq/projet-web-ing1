@@ -136,18 +136,6 @@ class Course
         return $this;
     }
 
-    public function getStarred(): ?bool
-    {
-        return $this->starred;
-    }
-
-    public function setStarred(bool $starred): self
-    {
-        $this->starred = $starred;
-
-        return $this;
-    }
-
     public function getActive(): ?bool
     {
         return $this->active;
