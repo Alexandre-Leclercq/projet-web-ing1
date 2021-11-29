@@ -11,13 +11,9 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Guard\AuthenticatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
-use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
-use Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator;
-use Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint;
 
 class RegistrationController extends AbstractController
 {
@@ -34,9 +30,7 @@ class RegistrationController extends AbstractController
     public function register(
         Request $request, 
         UserPasswordHasherInterface $userPasswordHasherInterface, 
-        RoleRepository $roleRepository, 
-        UserAuthenticatorInterface  $authenticator, 
-        FormLoginAuthenticator  $formAuthenticator
+        RoleRepository $roleRepository
     ): Response
     {
         $user = new User();
@@ -69,7 +63,7 @@ class RegistrationController extends AbstractController
                     ])
             );
             $this->addFlash('success', 'An email has been send to your email adress to validate your account');
-            return $authenticator->authenticateUser($user, $formAuthenticator, $request); 
+            return $this->redirectToRoute('index');
         }
 
         return $this->render('registration/register.html.twig', [
