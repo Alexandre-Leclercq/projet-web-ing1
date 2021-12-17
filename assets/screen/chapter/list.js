@@ -1,6 +1,12 @@
 $(() => {
     $('#listChapter').DataTable({
-        "ajax": {
+        dom: "<'float-start'l><'float-end'f>tipr"
+        ,responsive: true
+        ,orderCellsTop: true
+        ,fixedHeader: true
+        ,"pagingType": "full"
+        ,"aaSorting": []
+        ,"ajax": {
             'url': routeGetChapter,
             type: "POST",
             dataSrc: '',
@@ -14,8 +20,25 @@ $(() => {
             {
                 "targets": [2],
                 "orderable": false,
-            }],
-        "rowId": "id",
+            }
+        ]
+        ,"rowId": "id"
+        ,"language": {
+            "emptyTable": "No data to display",
+            "infoFiltered": "-  Filtred from _MAX_ lignes",
+            "search": "",
+            "searchPlaceholder": "Search...",
+            "lengthMenu": " _MENU_",
+            "infoEmpty": "No data to display",
+            "info": "Display page _PAGE_ of _PAGES_",
+            "sScrollY":"0px",
+            "paginate": {
+                "previous": "<",
+                "next": ">",
+                "first": "<<",
+                "last": ">>"
+            }
+        }
     });
 
     setInterval(() => { $('#listChapter').DataTable().ajax.reload(); }, 300000);
