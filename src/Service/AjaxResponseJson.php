@@ -168,13 +168,13 @@ class AjaxResponseJson
                             <span class="icon text-white">
                                 <i class="fas fa-check"></i>
                             </span>
-                        </a>&nbsp;';
+                        </a>&nbsp;</div>';
         } else {
             $action .= '<a class="btn btn-sm  btn-primary activeButton" value="0" title="Actif"> 
                             <span class="icon text-white">
                                 <i class="fas fa-times"></i>
                             </span>
-                        </a>&nbsp;';
+                        </a>&nbsp;</div>';
         }
         return $action;
     } catch (\Exception $e) {
