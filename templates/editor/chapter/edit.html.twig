@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+	{{ encore_entry_script_tags('js/listChapter') }}
+{% endblock %}
+{% block main %}
+	<div class="container my-5">
+		<div class="row">
+			<div class="col-xl col-lg">
+				<div class="card shadow mb-4">
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<h6 class="m-0 fw-bold text-primary col-6">{{ typeForm }}</h6>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col">
+                                {{ form_start(form) }}
+                                    
+                                {{ form_end(form) }}
+                                <div class="float-end">
+                                    <button type="submit" class="btn btn-primary rounded">
+                                        <span class="text text-white">Submit</span>
+                                    </button>
+                                    <a class="btn btn-secondary rounded" href="{{ path('editor.course.list') }}">
+                                        <span class="text text-black">Back</span>
+                                    </a>
+                                </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
