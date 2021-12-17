@@ -13,6 +13,55 @@ class AjaxResponseJson
         $this->router = $router;
     }
 
+    private function formatActionUser($idUser, $active)
+    {
+        try {
+            $action = '<div class="btn-group" role="group" aria-label="Action button">';
+            // edit button
+            $action .= '<a class="btn btn-sm  btn-primary" href="' . $this->router->generate('admin.user.edit', ['id' => $idUser]) . '" title="Modifier"> 
+                                    <span class="icon text-white">
+                                        <i class="fas fa-edit"></i> 
+                                    </span>
+                                </a>&nbsp;';
+            if ($active) {
+                $action .= '<a class="btn btn-sm  btn-primary activeButton" value="1" title="Actif"> 
+                                <span class="icon text-white">
+                                    <i class="fas fa-check"></i>
+                                </span>
+                            </a>&nbsp;';
+            } else {
+                $action .= '<a class="btn btn-sm  btn-primary activeButton" value="0" title="Actif"> 
+                                <span class="icon text-white">
+                                    <i class="fas fa-times"></i>
+                                </span>
+                            </a>&nbsp;</div>';
+            }
+            return $action;
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    public function listUserEditor($users): array
+    {
+        try{
+            
+            $tmp = [];
+            foreach($users as $user){
+                $tmp[] = [
+                    'id' => $user->getIdUser(),
+                    'name' => $user->getFirstName() . ' ' . $user->getLastName(),
+                    'role' =>  '<span class="badge rounded-pill bg-'.$user->getIdRole()->getColor().'">'.$user->getIdRole()->getExternCaption().'</span>',
+                    'dateLog' => is_null($user->getDateLog()) ? '' : $user->getDateLog()->format('d/m/Y H:i:s'),
+                    'action' => $this->formatActionUser($user->getIdUser(), $user->getActive()),
+                ];
+            }
+            return $tmp;
+        } catch(\Exception $e){
+            return [];
+        }
+    }
+
     private function formatActionCourse($idCourse, $active, $qtyChapter)
     {
         try {

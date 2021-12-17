@@ -11,7 +11,7 @@
         {% block javascripts %}{% endblock %}
         <link rel="icon" href="{{ asset('build/img/favicon.ico') }}" type="image/png">
     </head>
-    <body>
+    <body>                
         <nav class="navbar navbar-expand-md sticky-top navbar-{{ app_color }} bg-{{ app_color }}" aria-label="Fourth navbar example">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ path('index') }}">{{ app_name }}</a>
@@ -55,7 +55,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdownadmin" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownadmin">
                                     <li>
-                                        <a class="dropdown-item" href="#">Users</a>
+                                        <a class="dropdown-item" href="{{ path("admin.user.list") }}">Users</a>
                                     </li>
                                 </ul>
                             </li>
@@ -103,6 +103,14 @@
             </div>
         </nav>
         <main>
+            <div class="container my-5">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
             {% block main %}{% endblock %}
         </main>
         <footer class="footer mt-auto py-3 bg-primary">

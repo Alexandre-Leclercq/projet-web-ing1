@@ -28,6 +28,20 @@ class Role
     private $caption;
 
     /**
+     * @var string
+     * 
+     * @ORM\Column(name="externCaption", type="string", length=255, nullable=false)
+     */
+    private $externCaption;
+
+    /**
+     * @var string
+     * 
+     * @ORM\Column(name="color", type="string", length=255, nullable=false)
+     */
+    private $color;
+
+    /**
      * @var boolean
      * 
      * @ORM\Column(name="active", type="boolean", nullable=false, options={"default"="1"})
@@ -47,6 +61,30 @@ class Role
     public function setCaption(string $caption): self
     {
         $this->caption = $caption;
+
+        return $this;
+    }
+
+    public function getExternCaption(): ?string
+    {
+        return $this->externCaption;
+    }
+
+    public function setExternCaption(string $externCaption): self
+    {
+        $this->externCaption = $externCaption;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }
