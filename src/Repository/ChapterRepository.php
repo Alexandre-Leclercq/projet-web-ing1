@@ -27,6 +27,16 @@ class ChapterRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findMaxStep($idCourse)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('MAX(c.step)')
+            ->andWhere('c.idCourse = :id')
+            ->setParameter('id', $idCourse)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
     // /**
     //  * @return Chapter[] Returns an array of Chapter objects
     //  */

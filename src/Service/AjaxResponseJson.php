@@ -44,7 +44,7 @@ class AjaxResponseJson
                         </a>&nbsp;';
             }
             // add chapter button
-            $action .= '<a class="btn btn-sm  btn-primary" title="Ajouter un chapitre" href="'.$this->router->generate('editor.chapter.add').'"> 
+            $action .= '<a class="btn btn-sm  btn-primary" title="Ajouter un chapitre" href="'.$this->router->generate('editor.chapter.add', ['id' => $idCourse]).'"> 
                             <span class="icon text-white">
                                 <i class="fas fa-plus"></i>
                             </span>
@@ -103,13 +103,13 @@ class AjaxResponseJson
     try {
         $action = '<div class="btn-group" role="group" aria-label="Action button">';
         // edit button
-        $action .= '<a class="btn btn-sm  btn-primary" href="'.$this->router->generate('editor.chapter.add').'" title="Modifier"> 
+        $action .= '<a class="btn btn-sm  btn-primary" href="'.$this->router->generate('editor.chapter.edit', ['id' => $idChapter]).'" title="Modifier"> 
                                 <span class="icon text-white">
                                     <i class="fas fa-edit"></i> 
                                 </span>
                             </a>&nbsp;';
         // duplicat button
-        $action .= '<a class="btn btn-sm  btn-primary" href="'.$this->router->generate('editor.chapter.duplicate').'&duplicat" title="Dupliquer"> 
+        $action .= '<a class="btn btn-sm  btn-primary" href="'.$this->router->generate('editor.chapter.duplicate', ['id' => $idChapter]).'&duplicat" title="Dupliquer"> 
                             <span class="icon text-white">
                                 <i class="fas fa-clone"></i>
                             </span>
@@ -138,7 +138,7 @@ class AjaxResponseJson
      * @return string
      * Return json data for the datatable
      */
-    public function listChapterEditor($chapters): array
+    public function listChapterEditor($chapters, $idCourse): array
     {
         try {
             $tmp = [];

@@ -3,8 +3,8 @@
 namespace App\Controller\Editor;
 
 use App\Entity\Course;
-use App\Services\FileUploader;
-use App\Repository\CourseRepository;
+use App\Entity\Chapter;
+use App\Repository\ChapterRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -47,17 +47,58 @@ class ChapterController extends AbstractController
     }
 
     /**
-     * @Route("/editor/chapter/add", name="editor.chapter.add")
+     * @Route("/editor/chapter/edit/{id}", name="editor.chapter.edit", requirements={"page"="\d+"})
      */
-    public function add(Request $request, FileUploader $fileUploader)
+    public function edit(Chapter $chapter, Request $request)
     {
+        $user = $this->security->getUser();
 
+        $form = $this->createForm(ChapterType::class, $chapter);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $this->em->flush();
+            $this->em->clear();
+            return $this->redirectToRoute('editor.chapter.list');
+        }
+        return $this->render('editor/course/edit.html.twig', [
+            'user' => $user, 
+            'categories' => $this->categoryRepository->findBy(['active' => true]),
+            'form' => $form->createView(),
+            'typeForm' => 'Edit '.$chapter->getCaption()
+        ]);
     }
 
     /**
-     * @Route("/editor/chapter/duplicate", name="editor.chapter.duplicate")
+     * @Route("/editor/chapter/add/{id}", name="editor.chapter.add", requirements={"page"="\d+"})
      */
-    public function duplicate(Request $request, FileUploader $fileUploader)
+    public function add(Course $course, Request $request, ChapterRepository $chapterRepository)
+    {
+        $user = $this->security->getUser();
+        $chapter = new Chapter();
+        $chapter->setIdCourse($course);
+
+        $form = $this->createForm(ChapterType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $maxStep = $chapterRepository->findMaxStep($course->getIdCourse());
+            $chapter->setStep($maxStep + 1);
+            $this->em->persist($chapter);
+            $this->em->flush();
+            $this->em->clear();
+            return $this->redirectToRoute('editor.chapter.list');
+        }
+        return $this->render('editor/chapter/edit.html.twig', [
+            'user' => $user, 
+            'categories' => $this->categoryRepository->findBy(['active' => true]),
+            'form' => $form->createView(),
+            'typeForm' => 'Add chapter'
+        ]);
+    }
+
+    /**
+     * @Route("/editor/chapter/duplicate/{id}", name="editor.chapter.duplicate", requirements={"page"="\d+"})
+     */
+    public function duplicate(Request $request)
     {
 
     }
