@@ -1,27 +1,36 @@
 {% extends 'base.html.twig' %}
 {% block javascripts %}
-	<script></script>
-	{{ encore_entry_script_tags('js/listCourse') }}
+	<script>
+		const routeGetChapter = "{{ path('getChapterJson', {idCourse: course.idCourse}) }}";
+		const routeChangeActive = "{{ path('changeActiveChapter') }}";	
+	</script>
+	{{ encore_entry_script_tags('js/listChapter') }}
 {% endblock %}
 {% block main %}
-	<div class="container mt-5">
+	<div class="container my-5">
 		<div class="row">
 			<div class="col-xl col-lg">
 				<div class="card shadow mb-4">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary col-6">List chapters of
-							{{course.caption}}</h6>
+						<h6 class="m-0 fw-bold text-primary col-6">List chapters of {{course.caption}}</h6>
+						<div class="float-end">
+							<a class="btn btn-primary rounded" href="{{ path('editor.chapter.add', {id: course.idCourse}) }}">
+								<span class="text text-white">
+									<i class="fas fa-plus"></i>
+									Add chapter
+								</span>
+							</a>
+                    	</div>
 					</div>
 					<div class="card-body">
 						<div class="row">
 							<div class="col">
 								<div class="table-responsive">
-									<table id="listCourse" class="table cell-border table-striped table-xl w-100">
+									<table id="listChapter" class="table cell-border table-striped table-xl w-100">
 										<thead>
 											<tr>
 												<th>Name</th>
-												<th>Category</th>
-												<th>No. chapter</th>
+												<th>Chapter's number</th>
 												<th>Actions</th>
 											</tr>
 										</thead>

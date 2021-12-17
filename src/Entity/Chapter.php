@@ -56,13 +56,6 @@ class Chapter
     /**
      * @var boolean
      * 
-     * @ORM\Column(name="starred", type="boolean", nullable=false, options={"default"="0"})
-     */
-    private $starred = false;
-
-    /**
-     * @var boolean
-     * 
      * @ORM\Column(name="active", type="boolean", nullable=false, options={"default"="1"})
      */
     private $active = true;
@@ -116,18 +109,6 @@ class Chapter
     public function setContent(string $content): self
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getStarred(): ?bool
-    {
-        return $this->starred;
-    }
-
-    public function setStarred(bool $starred): self
-    {
-        $this->starred = $starred;
 
         return $this;
     }

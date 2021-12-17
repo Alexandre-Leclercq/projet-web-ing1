@@ -19,6 +19,24 @@ class ChapterRepository extends ServiceEntityRepository
         parent::__construct($registry, Chapter::class);
     }
 
+    public function getListChapter($idCourse)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.idCourse = :idCourse')
+            ->setParameter('idCourse', $idCourse)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findMaxStep($idCourse)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('MAX(c.step)')
+            ->andWhere('c.idCourse = :id')
+            ->setParameter('id', $idCourse)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
     // /**
     //  * @return Chapter[] Returns an array of Chapter objects
     //  */

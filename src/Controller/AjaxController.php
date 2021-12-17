@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\AjaxResponseJson;
 use App\Repository\CourseRepository;
+use App\Repository\ChapterRepository;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry; 
 use Symfony\Component\HttpFoundation\Request;
@@ -71,6 +72,28 @@ class AjaxController extends AbstractController
         $course = $courseRepository->find($request->request->get('id'));
         $course->setActive(!$course->getActive());
         $this->em->persist($course);
+        $this->em->flush();
+        $this->em->clear();
+        return new Response('');
+    }
+
+    /**
+     * @Route("/ajax/chapter/getJson/{idCourse}", name="getChapterJson", requirements={"idCourse"="\d+"})
+     */
+    public function chapterJson(int $idCourse, ChapterRepository $chapterRepository, AjaxResponseJson $ajaxResponseJson): JsonResponse
+    {
+        $chapters = $chapterRepository->getListChapter($idCourse);
+        return new JsonResponse($ajaxResponseJson->listChapterEditor($chapters, $idCourse));
+    }
+
+    /**
+     * @Route("/ajax/course/changeActiveChapter", name="changeActiveChapter")
+     */
+    public function changeActiveChapter(Request $request, ChapterRepository $chapterRepository): Response
+    {
+        $chapter = $chapterRepository->find($request->request->get('id'));
+        $chapter->setActive(!$chapter->getActive());
+        $this->em->persist($chapter);
         $this->em->flush();
         $this->em->clear();
         return new Response('');
