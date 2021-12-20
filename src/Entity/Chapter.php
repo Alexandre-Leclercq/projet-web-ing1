@@ -67,12 +67,12 @@ class Chapter
 
     public function getIdCourse(): ?Course
     {
-        return $this->IdCourse;
+        return $this->idCourse;
     }
 
-    public function setIdCourse(Course $IdCourse): self
+    public function setIdCourse(Course $idCourse): self
     {
-        $this->IdCourse = $IdCourse;
+        $this->idCourse = $idCourse;
 
         return $this;
     }
