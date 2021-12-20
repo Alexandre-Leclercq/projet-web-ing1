@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+	<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+	{{ encore_entry_script_tags('js/editChapter') }}
+{% endblock %}
+{% block main %}
+	<div class="container my-5">
+		<div class="row">
+			<div class="col-xl col-lg">
+				<div class="card shadow mb-4">
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<h6 class="m-0 fw-bold text-primary col-6">{{ typeForm }}</h6>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col">
+                                {{ form_start(form) }}
+								    <div class="row">
+                                        <div class="col">
+                                            {{ form_label(form.caption, 'Caption') }}
+                                            {{ form_widget(form.caption) }}
+                                            {{ form_errors(form.caption) }}
+                                        </div>
+                                    </div>
+									<div class="row mt-3">
+                                        <div class="col">
+                                            {{ form_label(form.content, 'Content') }}
+                                            {{ form_widget(form.content) }}
+                                            {{ form_errors(form.content) }}
+                                        </div>
+                                    </div>
+									<div class="row mt-3">
+                                        <div class="col">
+                                            {{ form_label(form.active, 'Active') }}
+                                            {{ form_widget(form.active) }}
+                                            {{ form_errors(form.active) }}
+                                        </div>
+                                    </div>
+									<div class="float-end">
+										<a class="btn btn-secondary rounded" href="{{ path('editor.chapter.list', {idCourse : id}) }}">
+											<span class="text text-black">Back</span>
+										</a>
+										<button class="btn btn-primary rounded">
+											<span class="text text-white">Submit</span>
+										</button>
+									</div>
+                                {{ form_end(form) }}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
