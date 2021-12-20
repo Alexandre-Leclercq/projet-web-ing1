@@ -50,21 +50,22 @@ class ChapterController extends AbstractController
     }
 
     /**
-     * @Route("/editor/chapter/edit/{id}", name="editor.chapter.edit", requirements={"page"="\d+"})
+     * @Route("/editor/chapter/edit/{id}", name="editor.chapter.edit", requirements={"id"="\d+"})
      */
     public function edit(Chapter $chapter, Request $request)
     {
         $user = $this->security->getUser();
-
+        $id = $chapter->getIdCourse()->getIdCourse();
         $form = $this->createForm(ChapterType::class, $chapter);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $this->em->flush();
             $this->em->clear();
-            return $this->redirectToRoute('editor.chapter.list');
+            return $this->redirectToRoute('editor.chapter.list', ['idCourse' => $id]);
         }
-        return $this->render('editor/course/edit.html.twig', [
-            'user' => $user, 
+        return $this->render('editor/chapter/edit.html.twig', [
+            'user' => $user,
+            'id' => $id, 
             'categories' => $this->categoryRepository->findBy(['active' => true]),
             'form' => $form->createView(),
             'typeForm' => 'Edit '.$chapter->getCaption()
@@ -79,7 +80,7 @@ class ChapterController extends AbstractController
         $user = $this->security->getUser();
         $chapter = new Chapter();
         $chapter->setIdCourse($course);
-
+        $idCourse = $course->getIdCourse();
         $form = $this->createForm(ChapterType::class);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
@@ -92,6 +93,7 @@ class ChapterController extends AbstractController
         }
         return $this->render('editor/chapter/edit.html.twig', [
             'user' => $user, 
+            'idCourse' => $idCourse,
             'categories' => $this->categoryRepository->findBy(['active' => true]),
             'form' => $form->createView(),
             'typeForm' => 'Add chapter'

@@ -6,6 +6,9 @@ use App\Entity\Chapter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ChapterType extends AbstractType
 {
@@ -20,12 +23,10 @@ class ChapterType extends AbstractType
                 'required' => false,
                 'disabled' => true 
             ])
-            ->add('content')
-            ->add('active', CheckboxType::class)
-            ->add('idCourse', TextType::class, [
-                'required' => true,
-                'disabled' => true 
+            ->add('content', TextareaType::class, [
+                'attr' => ['class' => 'tinymce']
             ])
+            ->add('active', CheckboxType::class)
         ;
     }
 
