@@ -1,7 +1,4 @@
 {% extends 'base.html.twig' %}
-{% block javascripts %}
-	{{ encore_entry_script_tags('js/listChapter') }}
-{% endblock %}
 {% block main %}
 	<div class="container my-5">
 		<div class="row">
@@ -54,15 +51,15 @@
                                             {{ form_errors(form.active) }}
                                         </div>
                                     </div>
+                                    <div class="float-end">
+                                        <button class="btn btn-primary rounded">
+                                            <span class="text text-white">Submit</span>
+                                        </button>
+                                        <a class="btn btn-secondary rounded" href="{{ path('editor.course.list') }}">
+                                            <span class="text text-black">Back</span>
+                                        </a>
+                                    </div>
                                 {{ form_end(form) }}
-                                <div class="float-end">
-                                    <button type="submit" class="btn btn-primary rounded">
-                                        <span class="text text-white">Submit</span>
-                                    </button>
-                                    <a class="btn btn-secondary rounded" href="{{ path('editor.course.list') }}">
-                                        <span class="text text-black">Back</span>
-                                    </a>
-                                </div>
 							</div>
 						</div>
 					</div>

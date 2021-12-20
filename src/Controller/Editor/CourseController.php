@@ -8,6 +8,7 @@ use App\Services\FileUploader;
 use App\Repository\CourseRepository;
 use App\Repository\ChapterRepository;
 use App\Repository\CategoryRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,10 +27,11 @@ class CourseController extends AbstractController
      */
     private $categoryRepository;
 
-    public function __construct(Security $security, CategoryRepository $categoryRepository)
+    public function __construct(Security $security, CategoryRepository $categoryRepository, ManagerRegistry $managerRegistry)
     {
         $this->security = $security;
         $this->categoryRepository = $categoryRepository;
+        $this->em = $managerRegistry->getManager();
     }
 
     /**
