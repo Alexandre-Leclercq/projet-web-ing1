@@ -3,7 +3,7 @@
 namespace App\Controller\Editor;
 
 use App\Entity\Course;
-use App\Form\CourseType;
+use App\Form\Editor\CourseType;
 use App\Services\FileUploader;
 use App\Repository\CourseRepository;
 use App\Repository\ChapterRepository;

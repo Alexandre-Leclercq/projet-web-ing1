@@ -4,6 +4,7 @@ namespace App\Controller\Editor;
 
 use App\Entity\Course;
 use App\Entity\Chapter;
+use App\Form\Editor\ChapterType;
 use App\Repository\ChapterRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\Persistence\ManagerRegistry;
