@@ -27,7 +27,7 @@ class FileUploader
     public function uploadFile(UploadedFile $file)
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $fileName = $this->slugger->slug($originalFilename).'.'.$file->getClientOriginalExtension();
+        $fileName = uniqid().'_'.$this->slugger->slug($originalFilename).'.'.$file->getClientOriginalExtension();
         try {
             $file->move(
                 $this->targetDirectory,
