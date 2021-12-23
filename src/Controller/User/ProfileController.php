@@ -64,7 +64,7 @@ class ProfileController extends AbstractController
             }
             $this->em->persist($user);
             $this->em->flush();
-            return $this->redirectToRoute('user.profile', ['id' => $user->getIdUser()]);
+            return $this->redirectToRoute('index');
         }
         return $this->render('user/profile.html.twig', [
             'user' => $this->security->getUser(), 
