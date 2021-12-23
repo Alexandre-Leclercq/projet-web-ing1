@@ -66,7 +66,7 @@
                                 <a class="nav-link dropdown-toggle p-0" href="#" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="fw-bold me-3">{{ user.firstName ~ ' ' ~ user.lastName }}</span>
                                 {% if user.pictureFileLink is not null %}
-                                    <img class="profile rounded" src="{{ file_dir ~ '/' ~ user.pictureFileLink }}" alt="profile" title="picture profile">
+                                    <img class="profile rounded" src="{{ asset(file_dir ~ '/' ~ user.pictureFileLink) }}" alt="profile" title="picture profile">
                                 {% else %}
                                     <img class="profile rounded" src="{{ asset('build/img/placeholder_profile.png') }}" alt="profile" title="picture profile">   
                                 {% endif %}
