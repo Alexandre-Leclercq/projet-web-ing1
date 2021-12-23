@@ -79,7 +79,8 @@ class UserController extends AbstractController
             return $this->redirectToRoute('admin.user.list');
         }
         return $this->render('admin/user/edit.html.twig', [
-            'user' => $this->security->getUser(), 
+            'user' => $this->security->getUser(),
+            'currentUser' => $user,
             'categories' => $this->categoryRepository->findBy(['active' => true]),
             'form' => $form->createView()
         ]);
