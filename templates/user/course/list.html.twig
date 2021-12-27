@@ -1,4 +1,11 @@
 {% extends 'base.html.twig' %}
+{% block javascripts %}
+<script>
+	const routeCourseStarred = "{{ path('changeStarredCourse') }}";
+	const user = {{ user.idUser }};
+</script>
+{{ encore_entry_script_tags('js/ajaxCourseStarred') }}
+{% endblock %}
 {% block main %}
 	<div class="container mt-5">
 		{% for course in courses %}
@@ -21,7 +28,7 @@
 										<small>{{ course.lastDatetime.format('Y/m/d') }}</small>
 										{% endif %}
 									</span>
-									<a href="#" class="col-md-2 starred" title="Starred">
+									<a href="#" class="col-md-2 starred" title="Starred" course="{{ lastCourse.idCourse.idCourse }}" user="{{ lastCourse.idUser.idUser }}">
 										{% if course.starred %}
 										<span class="text-secondary">
 											<i class="fas fa-star"></i>
