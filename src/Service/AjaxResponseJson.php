@@ -80,13 +80,13 @@ class AjaxResponseJson
                             </a>&nbsp;';
             // see button
             if ($qtyChapter <= 0) {
-                $action .= '<a class="btn btn-sm btn-primary disabled" target="_blank" href="'.$this->router->generate('user.course.content', ['id' => $idCourse]).'" title="Voir"> 
+                $action .= '<a class="btn btn-sm btn-primary disabled" target="_blank" href="'.$this->router->generate('user.course.content', ['course' => $idCourse]).'" title="Voir"> 
                             <span class="icon text-white">
                                 <i class="fas fa-eye"></i>
                             </span>
                         </a>&nbsp;';
             } else {
-                $action .= '<a class="btn btn-sm btn-primary" target="_blank" href="'.$this->router->generate('user.course.content', ['id' => $idCourse]).'" title="Voir"> 
+                $action .= '<a class="btn btn-sm btn-primary" target="_blank" href="'.$this->router->generate('user.course.content', ['course' => $idCourse]).'" title="Voir"> 
                             <span class="icon text-white">
                                 <i class="fas fa-eye"></i>
                             </span>
