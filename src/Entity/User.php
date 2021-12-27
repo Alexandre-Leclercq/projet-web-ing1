@@ -47,11 +47,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $lastName;
 
     /**
-     * @ORM\Column(name="token", type="string", length=255, nullable=true, options={"default"=NULL})
-     */
-    private $token;
-
-    /**
      * @ORM\Column(name="pictureFilelink", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $pictureFilelink;
@@ -209,18 +204,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    public function getToken(): ?string
-    {
-        return $this->token;
-    }
-
-    public function setToken(?string $token): self
-    {
-        $this->token = $token;
 
         return $this;
     }
