@@ -2,9 +2,62 @@
     font-family: 'Mulish', sans-serif;
 }
 
-.navbar {
+main {
+    min-height: 400px;
+}
+
+.navbar-bottom-primary {
     border-bottom: $primary 4px solid;
     box-shadow: 0px 3px 4px rgb(0 0 0 / 25%);
+}
+
+.chapters-navbar {
+    position: sticky;
+    top: 100px;
+    z-index: 1020;
+}
+
+.btn-previous {
+    @include button-variant($secondary, $secondary);
+}
+
+.btn-previous:hover {
+    background-color: darken($color: $secondary, $amount: 5);
+    border-color: darken($color: $secondary, $amount: 5);
+}
+
+.btn-next {
+    @include button-variant($primary, $primary);
+}
+
+.btn-next:hover {
+    background-color: darken($color: $primary, $amount: 5);
+    border-color: darken($color: $primary, $amount: 5);
+}
+
+.controls {
+    position: sticky;
+    bottom: 150px;
+    display: flex;
+    justify-content: center;
+    z-index: 1019;
+}
+
+.spacer {
+    flex-grow: 1;
+    max-width: 600px;
+}
+
+@media screen and (max-width: 768px) {
+    .spacer {
+        max-width: 400px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .spacer {
+        max-width: 150px;
+    }
 }
 
 .navbar-toggler:focus {
@@ -57,3 +110,60 @@
     justify-content: center;
 }
 
+.article {
+    min-height: 400px;
+}
+
+ol.chapterList {
+    counter-reset: li-count;
+    list-style: none;
+}
+
+ol.chapterList li {
+    display: block;
+    counter-increment: li-count;
+}
+
+ol.chapterList li a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: grey;
+    font-size: 18px;
+    padding: 3px 10px;
+    min-height: 48px;
+    font-weight: 400;
+    line-height: 20px;
+    box-sizing: content-box;
+    margin: 6px 0;
+    font-family: Mulish, sans-serif;
+}
+
+ol.chapterList li a:hover {
+    background-color: lightgray;
+}
+
+ol.chapterList li a::before {
+    content: counters(li-count, ".");
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    color: white;
+    background-color: gray;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 32px;
+    margin-right: 8px;
+}
+
+ol.chapterList li.completed a::before {
+    background-color: $primary;
+}
+
+ol.chapterList li.selected a {
+    font-weight: 600;
+} 
+ol.chapterList li.selected a::before {
+    background-color: $primary;
+} 

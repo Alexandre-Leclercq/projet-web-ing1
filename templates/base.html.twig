@@ -12,7 +12,7 @@
         <link rel="icon" href="{{ asset('build/img/favicon.ico') }}" type="image/png">
     </head>
     <body>                
-        <nav class="navbar navbar-expand-md sticky-top navbar-{{ app_color }} bg-{{ app_color }}" aria-label="Fourth navbar example">
+        <nav class="navbar navbar-bottom-primary navbar-expand-md sticky-top navbar-{{ app_color }} bg-{{ app_color }}" aria-label="Fourth navbar example">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ path('index') }}">{{ app_name }}</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,12 +28,12 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownCourses">
                                 {% for category in categories %}
                                     <li>
-                                        <a class="dropdown-item" href="{{ path('listCourse', {id: category.idCategory}) }}">{{ category.caption }}</a>
+                                        <a class="dropdown-item" href="{{ path('user.course.list', {idCategory: category.idCategory}) }}">{{ category.caption }}</a>
                                     </li>
                                 {% endfor %}
                                     <hr>
                                     <li>
-                                        <a class="dropdown-item" href="{{ path('listCourse') }}">See all</a>
+                                        <a class="dropdown-item" href="{{ path('user.course.list') }}">See all</a>
                                     </li>
                                 </ul>
                             </li>
@@ -66,14 +66,14 @@
                                 <a class="nav-link dropdown-toggle p-0" href="#" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="fw-bold me-3">{{ user.firstName ~ ' ' ~ user.lastName }}</span>
                                 {% if user.pictureFileLink is not null %}
-                                    <img class="profile rounded" src="{{ file_dir ~ '/' ~ user.pictureFileLink }}" alt="profile" title="picture profile">
+                                    <img class="profile rounded" src="{{ asset(file_dir ~ '/' ~ user.pictureFileLink) }}" alt="profile" title="picture profile">
                                 {% else %}
                                     <img class="profile rounded" src="{{ asset('build/img/placeholder_profile.png') }}" alt="profile" title="picture profile">   
                                 {% endif %}
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdown">
                                     <li>
-                                        <a class="dropdown-item" href="#">Settings</a>
+                                        <a class="dropdown-item" href="{{ path('user.profile', {id: user.idUser}) }}">Profile</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
@@ -103,14 +103,23 @@
             </div>
         </nav>
         <main>
+            {% if app.flashes is not empty %}
             <div class="container my-5">
-                {% for message in app.flashes('success') %}
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endfor %}
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('warning') %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
             </div>
+            {% endif %}
+            
             {% block main %}{% endblock %}
         </main>
         <footer class="footer mt-auto py-3 bg-primary">

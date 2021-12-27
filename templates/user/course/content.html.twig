@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+<div class="collapse" id="navbarToggleExternalContent">
+    <div class="bg-white p-4">
+        <h5 class="text-dark h4">List of chapters:</h5>
+        <ol class="chapterList">
+            {% for tmpChapter in chapters %}
+                {% if tmpChapter.step < chapter.step %}
+            <li class="completed"> 
+                {% elseif tmpChapter.step == chapter.step %}
+            <li class="selected">
+                {% else %}
+            <li>       
+                {% endif %}    
+                <a href="{{ path("user.course.content", {course: chapter.idCourse.idCourse, step: tmpChapter.step}) }}">{{ tmpChapter.caption }}</a>
+            </li> 
+            {% endfor %}
+        </ol>
+    </div>
+</div>
+<nav class="navbar chapters-navbar navbar-light bg-transparent">
+    <div class="container-fluid">
+        <button class="navbar-toggler bg-white shadow-lg ms-0 ms-md-5" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+<div class="container my-5">
+    {% if chapter is not null %}
+    <h1>{{ chapter.idCourse.caption }}</h1>
+    {% endif %}
+    <div class="article card shadow-sm p-5">
+        {% if chapter is not null %}
+        <h1 class="mb-3">{{ chapter.step }}. {{ chapter.caption }}</h1>
+        {{ chapter.content|raw }}
+        {% endif %}
+    </div>
+</div>
+<div class="controls mb-3">
+    {% if chapter.step != 1 %}
+    <a href="{{ path("user.course.content", {course: chapter.idCourse.idCourse, step: chapter.step - 1}) }}" class="btn btn-previous shadow-sm">Previous</a>
+    {% endif %}
+    <div class="spacer"></div>
+    {% if chapter.step < chapters|length %}
+    <a href="{{ path("user.course.content", {course: chapter.idCourse.idCourse, step: chapter.step + 1}) }}" class="btn btn-next shadow-sm">Next</a>
+    {% endif %}
+</div>
+{% endblock %}

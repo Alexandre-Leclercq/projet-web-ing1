@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\CourseStatus;
 use App\Service\AjaxResponseJson;
 use App\Repository\CourseRepository;
 use App\Repository\ChapterRepository;
+use App\Repository\CourseStatusRepository;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry; 
 use Symfony\Component\HttpFoundation\Request;
@@ -58,9 +60,9 @@ class AjaxController extends AbstractController
     {
         $user = $security->getUser();
         if (is_null($user) ? 0 : $user->getIdRole()->getIdRole() == $this->getParameter('user.idRole.admin'))
-            $courses = $courseRepository->getListCourse($user, true);
+            $courses = $courseRepository->getListEditorCourse($user, true);
         else
-            $courses = $courseRepository->getListCourse($user, false);
+            $courses = $courseRepository->getListEditorCourse($user, false);
         return new JsonResponse($ajaxResponseJson->listCourseEditor($courses));
     }
 
@@ -75,6 +77,26 @@ class AjaxController extends AbstractController
         $this->em->flush();
         $this->em->clear();
         return new Response('');
+    }
+
+    /**
+     * @Route("/ajax/course/changeStarred", name="changeStarredCourse")
+     */
+    public function changeStarredCourse(Request $request, CourseStatusRepository $courseStatusRepository, CourseRepository $courseRepository, UserRepository $userRepository): Response
+    {
+        $courseStatus = $courseStatusRepository->findOneBy(['idUser' => $request->request->get('idUser'), 'idCourse' => $request->request->get('idCourse')]);
+        if(is_null($courseStatus)){
+            $courseStatus = (new CourseStatus())
+                ->setIdCourse($courseRepository->find($request->request->get('idCourse')))
+                ->setIdUser($userRepository->find($request->request->get('idUser')))
+                ->setStarred(true);
+        } else {
+            $courseStatus->setStarred(!$courseStatus->getStarred());
+        }
+        $this->em->persist($courseStatus);
+        $this->em->flush();
+        $this->em->clear();
+        return new Response($courseStatus->getStarred());
     }
 
     /**

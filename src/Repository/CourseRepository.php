@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Course;
 use App\Entity\Chapter;
+use App\Entity\CourseStatus;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -20,7 +21,40 @@ class CourseRepository extends ServiceEntityRepository
         parent::__construct($registry, Course::class);
     }
 
-    public function getListCourse($idUser, bool $admin)
+    public function getUserListCourse($idUser, $idCategory = null)
+    {
+        if(is_null($idCategory)){
+            return $this->createQueryBuilder('c')
+                ->select('c as course')
+                ->addSelect('cs.starred as starred')
+                ->addSelect('cs.lastDatetime as lastDatetime')
+                ->addSelect('ch.step as step')
+                ->leftJoin(CourseStatus::class, 'cs', 'with', 'cs.idCourse = c.idCourse and cs.idUser = :user')
+                ->leftJoin(Chapter::class, 'ch', 'with', 'ch.idChapter = cs.lastChapterReading')
+                ->andWhere('c.active = 1')
+                ->setParameter('user', $idUser)
+                ->orderBy('c.caption', 'ASC')
+                ->getQuery()
+                ->getResult();
+        } else {
+            return $this->createQueryBuilder('c')
+                ->select('c as course')
+                ->addSelect('cs.starred as starred')
+                ->addSelect('cs.lastDatetime as lastDatetime')
+                ->addSelect('ch.step as step')
+                ->leftJoin(CourseStatus::class, 'cs', 'with', 'cs.idCourse = c.idCourse and cs.idUser = :user')
+                ->leftJoin(Chapter::class, 'ch', 'with', 'ch.idChapter = cs.lastChapterReading')
+                ->andWhere('c.idCategory = :category')
+                ->andWhere('c.active = 1')
+                ->setParameter('user', $idUser)
+                ->setParameter('category', $idCategory)
+                ->orderBy('c.caption', 'ASC')
+                ->getQuery()
+                ->getResult();
+        }
+    }
+
+    public function getListEditorCourse($idUser, bool $admin)
     {
         if ($admin) {
             return $this->createQueryBuilder('c')

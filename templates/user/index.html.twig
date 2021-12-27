@@ -1,150 +1,120 @@
 {% extends 'base.html.twig' %}
+{% block javascripts %}
+<script>
+	const routeCourseStarred = "{{ path('changeStarredCourse') }}";
+	const user = {{ user.idUser }};
+</script>
+{{ encore_entry_script_tags('js/ajaxCourseStarred') }}
+{% endblock %}
 {% block main %}
 <div class="container mt-5">
-	<h1 class="mb-5">Last Courses</h1>
+	{% if lastCourse is not null %}
+	<h1 class="mb-2">Last Course</h1>
 	<div class="row justify-content-center mb-5">
-		<div class="card shadow" style="max-width: 540px;">
+		<div class="card shadow" style="max-width: 675px;">
 			<div class="row g-0">
-				<div class="col-md-4">
-					<img src="..." class="img-fluid rounded-start" alt="...">
+				<div class="col-md-4 d-flex align-items-center">
+					<img src="{{ asset('build/img/test.jpg')}}" class="img-fluid rounded-start" alt="...">
 				</div>
 				<div class="col-md-8">
 					<div class="card-body">
 						<div class="row">
-							<span class="text-muted col-6">COMPUTER SCIENCE</span>
-							<span class="text-muted col-4"><small>3 days ago</small></span>
-							<a href="#" class="col-2" title="Starred">
-								<span class="text-primary">
-									<i class="fas fa-stared"></i>
-								</span>
-							</a>
-						</div>
-						<div class="row">
-							<h5 class="card-title">Card title</h5>
-						</div>
-						<div class="row">
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-						</div>
-						<div class="row">
-							<span class="author col-6">
-							Adrien Colmart
+							<span class="text-muted col-md-6">{{ lastCourse.idCourse.idCategory.caption }}</span>
+							<span class="text-muted col-md-4">
+								<small>{{lastCourse.lastDatetime.format('Y/m/d') }}</small>
 							</span>
-							<a href="" class="text-primary col-6">Read more
-								<i class="fas fa-arrow"></i>
+							<a href="#" class="col-md-2 starred" title="Starred" course="{{ lastCourse.idCourse.idCourse }}" user="{{ lastCourse.idUser.idUser }}">
+								{% if lastCourse.starred %}
+								<span class="text-secondary">
+									<i class="fas fa-star"></i>
+								</span>
+								{% else %}
+								<span class="text-secondary">
+									<i class="far fa-star"></i>
+								</span>
+								{% endif %}
 							</a>
+						</div>
+						<div class="row mt-2">
+							<h5 class="card-title">{{ lastCourse.idCourse.caption }}</h5>
+						</div>
+						<div class="row">
+							<p class="card-text">{{ lastCourse.idCourse.description }}</p>
+						</div>
+						<div class="row mt-2">
+							<span class="text-muted col-md-6">
+								{{ lastCourse.idUser.firstName ~ ' ' ~ lastCourse.idUser.lastName }}
+							</span>
+							{% if lastCourse.lastChapterReading is null %}
+							<a href="{{ path('user.course.content', {course: lastCourse.idCourse.idCourse}) }}" class="text-primary col-md-6">Start
+								<i class="fas fa-arrow-right"></i>
+							</a>
+							{% else %}
+							<a href="{{ path('user.course.content', {course: lastCourse.idCourse.idCourse, step: lastCourse.lastChapterReading.step}) }}" class="text-primary col-md-6">Continue
+								<i class="fas fa-arrow-right"></i>
+							</a>
+							{% endif %}
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	{% endif %}
+	{% if starredCourses is not empty %}
+	<h1 class="mb-2">Starred</h1>
+	{% for starredCourse in starredCourses %}
 	<div class="row justify-content-center mb-5">
-		<div class="card shadow" style="max-width: 540px;">
+		<div class="card shadow" style="max-width: 675px;">
 			<div class="row g-0">
-				<div class="col-md-4">
-					<img src="..." class="img-fluid rounded-start" alt="...">
+				<div class="col-md-4 d-flex align-items-center">
+					<img src="{{ asset('build/img/test.jpg')}}" class="img-fluid rounded-start" alt="...">
 				</div>
 				<div class="col-md-8">
 					<div class="card-body">
 						<div class="row">
-							<span class="text-muted col-6">COMPUTER SCIENCE</span>
-							<span class="text-muted col-4"><small>3 days ago</small></span>
-							<a href="#" class="col-2" title="Starred">
-								<span class="text-primary">
-									<i class="fas fa-stared"></i>
-								</span>
-							</a>
-						</div>
-						<div class="row">
-							<h5 class="card-title">Card title</h5>
-						</div>
-						<div class="row">
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-						</div>
-						<div class="row">
-							<span class="author col-6">
-							Adrien Colmart
+							<span class="text-muted col-md-6">{{ starredCourse.idCourse.idCategory.caption }}</span>
+							<span class="text-muted col-md-4">
+								<small>{{starredCourse.lastDatetime.format('Y/m/d') }}</small>
 							</span>
-							<a href="" class="text-primary col-6">Read more
-								<i class="fas fa-arrow"></i>
+							<a href="#" class="col-md-2 starred" title="Starred">
+								{% if starredCourse.starred %}
+								<span class="text-secondary">
+									<i class="fas fa-star"></i>
+								</span>
+								{% else %}
+								<span class="text-secondary">
+									<i class="far fa-star"></i>
+								</span>
+								{% endif %}
 							</a>
+						</div>
+						<div class="row mt-2">
+							<h5 class="card-title">{{ starredCourse.idCourse.caption }}</h5>
+						</div>
+						<div class="row">
+							<p class="card-text">{{ starredCourse.idCourse.description }}</p>
+						</div>
+						<div class="row mt-2">
+							<span class="text-muted col-md-6">
+								{{ starredCourse.idUser.firstName ~ ' ' ~ starredCourse.idUser.lastName }}
+							</span>
+							{% if lastCourse.lastChapterReading is null %}
+							<a href="{{ path('user.course.content', {course: lastCourse.idCourse.idCourse}) }}" class="text-primary col-md-6">Start
+								<i class="fas fa-arrow-right"></i>
+							</a>
+							{% else %}
+							<a href="{{ path('user.course.content', {course: lastCourse.idCourse.idCourse, step: lastCourse.lastChapterReading.step}) }}" class="text-primary col-md-6">Continue
+								<i class="fas fa-arrow-right"></i>
+							</a>
+							{% endif %}
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="row justify-content-center mb-5">
-		<div class="card shadow" style="max-width: 540px;">
-			<div class="row g-0">
-				<div class="col-md-4">
-					<img src="..." class="img-fluid rounded-start" alt="...">
-				</div>
-				<div class="col-md-8">
-					<div class="card-body">
-						<div class="row">
-							<span class="text-muted col-6">COMPUTER SCIENCE</span>
-							<span class="text-muted col-4"><small>3 days ago</small></span>
-							<a href="#" class="col-2" title="Starred">
-								<span class="text-primary">
-									<i class="fas fa-stared"></i>
-								</span>
-							</a>
-						</div>
-						<div class="row">
-							<h5 class="card-title">Card title</h5>
-						</div>
-						<div class="row">
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-						</div>
-						<div class="row">
-							<span class="author col-6">
-							Adrien Colmart
-							</span>
-							<a href="" class="text-primary col-6">Read more
-								<i class="fas fa-arrow"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row justify-content-center mb-5">
-		<div class="card shadow" style="max-width: 540px;">
-			<div class="row g-0">
-				<div class="col-md-4">
-					<img src="..." class="img-fluid rounded-start" alt="...">
-				</div>
-				<div class="col-md-8">
-					<div class="card-body">
-						<div class="row">
-							<span class="text-muted col-6">COMPUTER SCIENCE</span>
-							<span class="text-muted col-4"><small>3 days ago</small></span>
-							<a href="#" class="col-2" title="Starred">
-								<span class="text-primary">
-									<i class="fas fa-stared"></i>
-								</span>
-							</a>
-						</div>
-						<div class="row">
-							<h5 class="card-title">Card title</h5>
-						</div>
-						<div class="row">
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-						</div>
-						<div class="row">
-							<span class="author col-6">
-							Adrien Colmart
-							</span>
-							<a href="" class="text-primary col-6">Read more
-								<i class="fas fa-arrow"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	{% endfor %}
+	{% endif %}
 </div>
 {% endblock %}

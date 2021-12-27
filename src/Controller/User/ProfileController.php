@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\User;
 
 use App\Entity\User;
-use App\Form\Admin\UserType;
+use App\Form\User\UserType;
 use App\Services\FileUploader;
 use App\Repository\CategoryRepository;
-use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -15,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserController extends AbstractController
+class ProfileController extends AbstractController
 {
     /**
      * @var Security
@@ -40,18 +39,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/user/list", name="admin.user.list")
-     */
-    public function list(UserRepository $userRepository): Response
-    {
-        return $this->render('admin/user/list.html.twig', [
-            'user' => $this->security->getUser(), 
-            'categories' => $this->categoryRepository->findBy(['active' => true])
-        ]);
-    }
-
-    /**
-     * @Route("/admin/user/edit/{id}", name="admin.user.edit", requirements={"id"="\d+"})
+     * @Route("/profile/{id}", name="user.profile", requirements={"id"="\d+"})
      * 
      * @param User $user
      * @param Request $request
@@ -76,11 +64,10 @@ class UserController extends AbstractController
             }
             $this->em->persist($user);
             $this->em->flush();
-            return $this->redirectToRoute('admin.user.list');
+            return $this->redirectToRoute('index');
         }
-        return $this->render('admin/user/edit.html.twig', [
-            'user' => $this->security->getUser(),
-            'currentUser' => $user,
+        return $this->render('user/profile.html.twig', [
+            'user' => $this->security->getUser(), 
             'categories' => $this->categoryRepository->findBy(['active' => true]),
             'form' => $form->createView()
         ]);

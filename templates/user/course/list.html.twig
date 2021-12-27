@@ -6,34 +6,52 @@
 				<div class="card shadow" style="max-width: 675px;">
 					<div class="row g-0">
 						<div class="col-md-4 d-flex align-items-center">
-							<img src="{{ asset('build/img/test.jpg')}}" class="img-fluid rounded-start" alt="...">
+							{% if course.course.filelink is not null %}
+							<img src="{{ asset('build/files/' ~ course.course.filelink)}}" class="img-fluid rounded-start" alt="...">
+                        	{% else %}
+							<img src="{{ asset('build/img/study_from_books.png')}}" class="img-fluid rounded-start" alt="...">   
+                        	{% endif %}
 						</div>
 						<div class="col-md-8">
 							<div class="card-body">
 								<div class="row">
-									<span class="text-muted col-md-6">{{ course.idCategory.caption }}</span>
+									<span class="text-muted col-md-6">{{ course.course.idCategory.caption }}</span>
 									<span class="text-muted col-md-4">
-										<small>3 days ago</small>
+										{% if course.lastDatetime is not null %}
+										<small>{{ course.lastDatetime.format('Y/m/d') }}</small>
+										{% endif %}
 									</span>
-									<a href="#" class="col-md-2" title="Starred">
-										<span class="text-primary">
+									<a href="#" class="col-md-2 starred" title="Starred">
+										{% if course.starred %}
+										<span class="text-secondary">
+											<i class="fas fa-star"></i>
+										</span>
+										{% else %}
+										<span class="text-secondary">
 											<i class="far fa-star"></i>
 										</span>
+										{% endif %}
 									</a>
 								</div>
 								<div class="row mt-2">
-									<h5 class="card-title">{{ course.caption }}</h5>
+									<h5 class="card-title">{{ course.course.caption }}</h5>
 								</div>
 								<div class="row">
-									<p class="card-text">{{ course.description }}</p>
+									<p class="card-text">{{ course.course.description }}</p>
 								</div>
 								<div class="row mt-2">
 									<span class="text-muted col-md-6">
-										{{ course.idUser.firstName ~ ' ' ~ course.idUser.lastName }}
+										{{ course.course.idUser.firstName ~ ' ' ~ course.course.idUser.lastName }}
 									</span>
-									<a href="" class="text-primary col-md-6">Read more
+									{% if course.step is null %}
+									<a href="{{ path('user.course.content', {course: course.course.idCourse}) }}" class="text-primary col-md-6">Start
 										<i class="fas fa-arrow-right"></i>
 									</a>
+									{% else %}
+									<a href="{{ path('user.course.content', {course: course.course.idCourse, step: course.step}) }}" class="text-primary col-md-6">Continue
+										<i class="fas fa-arrow-right"></i>
+									</a>
+									{% endif %}
 								</div>
 							</div>
 						</div>
