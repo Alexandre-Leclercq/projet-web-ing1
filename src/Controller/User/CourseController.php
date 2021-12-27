@@ -59,20 +59,22 @@ class CourseController extends AbstractController
     }
 
     /**
-     * @Route("/course/list/{id?}", name="user.course.list", requirements={"id"="\d+"})
+     * @Route("/course/list/{idCategory?}", name="user.course.list", requirements={"idCategory"="\d+"})
      */
-    public function list(CourseRepository $courseRepository, ?int $id = null): Response
+    public function list(CourseRepository $courseRepository, ?int $idCategory = null): Response
     {
-        //global
+
         $user = $this->security->getUser();
         $categories = $this->categoryRepository->findBy(['active' => true]);
 
-        if (is_null($id))
-            $courses = $courseRepository->findBy(['active' => '1']);
+        if (is_null($idCategory))
+            $courses = $courseRepository->getUserListCourse($user->getIdUser());
         else
-            $courses = $courseRepository->findBy(['active' => '1', 'idCategory' => $id]);
-
-        return $this->render('user/course/list.html.twig', ['user' => $user, 'categories' => $categories, 'courses' => $courses]);
+            $courses = $courseRepository->getUserListCourse($user->getIdUser(), $idCategory);
+        return $this->render('user/course/list.html.twig', [
+            'user' => $user, 'categories' => $categories, 
+            'courses' => $courses
+        ]);
     }
 
     /**

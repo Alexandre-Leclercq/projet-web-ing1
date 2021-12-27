@@ -60,9 +60,9 @@ class AjaxController extends AbstractController
     {
         $user = $security->getUser();
         if (is_null($user) ? 0 : $user->getIdRole()->getIdRole() == $this->getParameter('user.idRole.admin'))
-            $courses = $courseRepository->getListCourse($user, true);
+            $courses = $courseRepository->getListEditorCourse($user, true);
         else
-            $courses = $courseRepository->getListCourse($user, false);
+            $courses = $courseRepository->getListEditorCourse($user, false);
         return new JsonResponse($ajaxResponseJson->listCourseEditor($courses));
     }
 
