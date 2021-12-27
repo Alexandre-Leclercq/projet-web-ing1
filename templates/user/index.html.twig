@@ -14,8 +14,8 @@
 		<div class="card shadow" style="max-width: 675px;">
 			<div class="row g-0">
 				<div class="col-md-4 d-flex align-items-center">
-					{% if course.course.filelink is not null %}
-						<img src="{{ asset('build/files/' ~ course.course.filelink)}}" class="img-fluid rounded-start" alt="...">
+					{% if lastCourse.idCourse.filelink is not null %}
+						<img src="{{ asset('build/files/' ~ lastCourse.idCourse.filelink)}}" class="img-fluid rounded-start" alt="...">
 					{% else %}
 						<img src="{{ asset('build/img/study_from_books.png')}}" class="img-fluid rounded-start" alt="...">   
 					{% endif %}
@@ -72,8 +72,8 @@
 		<div class="card shadow" style="max-width: 675px;">
 			<div class="row g-0">
 				<div class="col-md-4 d-flex align-items-center">
-					{% if course.course.filelink is not null %}
-						<img src="{{ asset('build/files/' ~ course.course.filelink)}}" class="img-fluid rounded-start" alt="...">
+					{% if starredCourse.idCourse.filelink is not null %}
+						<img src="{{ asset('build/files/' ~ starredCourse.idCourse.filelink)}}" class="img-fluid rounded-start" alt="...">
 					{% else %}
 						<img src="{{ asset('build/img/study_from_books.png')}}" class="img-fluid rounded-start" alt="...">   
 					{% endif %}
