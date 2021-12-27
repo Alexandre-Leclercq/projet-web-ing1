@@ -4,8 +4,11 @@ namespace App\Controller\Editor;
 
 use App\Entity\Course;
 use App\Entity\Chapter;
+use App\Form\Editor\EditChapterType;
+use App\Form\Editor\AddChapterType;
 use App\Repository\ChapterRepository;
 use App\Repository\CategoryRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,10 +27,11 @@ class ChapterController extends AbstractController
      */
     private $categoryRepository;
 
-    public function __construct(Security $security, CategoryRepository $categoryRepository)
+    public function __construct(Security $security, CategoryRepository $categoryRepository, ManagerRegistry $managerRegistry)
     {
         $this->security = $security;
         $this->categoryRepository = $categoryRepository;
+        $this->em = $managerRegistry->getManager();
     }
 
     /**
@@ -47,21 +51,22 @@ class ChapterController extends AbstractController
     }
 
     /**
-     * @Route("/editor/chapter/edit/{id}", name="editor.chapter.edit", requirements={"page"="\d+"})
+     * @Route("/editor/chapter/edit/{id}", name="editor.chapter.edit", requirements={"id"="\d+"})
      */
     public function edit(Chapter $chapter, Request $request)
     {
         $user = $this->security->getUser();
-
-        $form = $this->createForm(ChapterType::class, $chapter);
+        $id = $chapter->getIdCourse()->getIdCourse();
+        $form = $this->createForm(EditChapterType::class, $chapter);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $this->em->flush();
             $this->em->clear();
-            return $this->redirectToRoute('editor.chapter.list');
+            return $this->redirectToRoute('editor.chapter.list', ['idCourse' => $id]);
         }
-        return $this->render('editor/course/edit.html.twig', [
-            'user' => $user, 
+        return $this->render('editor/chapter/edit.html.twig', [
+            'user' => $user,
+            'id' => $id, 
             'categories' => $this->categoryRepository->findBy(['active' => true]),
             'form' => $form->createView(),
             'typeForm' => 'Edit '.$chapter->getCaption()
@@ -76,8 +81,8 @@ class ChapterController extends AbstractController
         $user = $this->security->getUser();
         $chapter = new Chapter();
         $chapter->setIdCourse($course);
-
-        $form = $this->createForm(ChapterType::class);
+        $id = $course->getIdCourse();
+        $form = $this->createForm(AddChapterType::class, $chapter);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $maxStep = $chapterRepository->findMaxStep($course->getIdCourse());
@@ -85,10 +90,11 @@ class ChapterController extends AbstractController
             $this->em->persist($chapter);
             $this->em->flush();
             $this->em->clear();
-            return $this->redirectToRoute('editor.chapter.list');
+            return $this->redirectToRoute('editor.chapter.list', ['idCourse' => $id]);
         }
-        return $this->render('editor/chapter/edit.html.twig', [
+        return $this->render('editor/chapter/add.html.twig', [
             'user' => $user, 
+            'id' => $id,
             'categories' => $this->categoryRepository->findBy(['active' => true]),
             'form' => $form->createView(),
             'typeForm' => 'Add chapter'
@@ -98,8 +104,31 @@ class ChapterController extends AbstractController
     /**
      * @Route("/editor/chapter/duplicate/{id}", name="editor.chapter.duplicate", requirements={"page"="\d+"})
      */
-    public function duplicate(Request $request)
+    public function duplicate(Chapter $chapter, Request $request, ChapterRepository $chapterRepository)
     {
-
+        $user = $this->security->getUser();
+        $id = $chapter->getIdCourse()->getIdCourse();
+        $chapterDuplicate = new Chapter();
+        $chapterDuplicate->setIdCourse($chapter->getIdCourse())
+            ->setCaption($chapter->getCaption())
+            ->setContent($chapter->getContent())
+            ->setActive($chapter->getActive());
+        $form = $this->createForm(AddChapterType::class, $chapterDuplicate);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $maxStep = $chapterRepository->findMaxStep($chapter->getIdCourse());
+            $chapterDuplicate->setStep($maxStep + 1);
+            $this->em->persist($chapterDuplicate);
+            $this->em->flush();
+            $this->em->clear();
+            return $this->redirectToRoute('editor.chapter.list', ['idCourse' => $id]);
+        }
+        return $this->render('editor/chapter/add.html.twig', [
+            'user' => $user,
+            'id' => $id, 
+            'categories' => $this->categoryRepository->findBy(['active' => true]),
+            'form' => $form->createView(),
+            'typeForm' => 'Duplicate '.$chapter->getCaption()
+        ]);
     }
 }

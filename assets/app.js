@@ -12,4 +12,4 @@ const $ = require('jquery');
 
 import 'datatables';
 
-import 'datatables.net-bs5'
+import 'datatables.net-bs5';
