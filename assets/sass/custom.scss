@@ -167,3 +167,8 @@ ol.chapterList li.selected a {
 ol.chapterList li.selected a::before {
     background-color: $primary;
 } 
+
+.card img {
+    max-width: 240px;
+    max-height: 240px;
+}

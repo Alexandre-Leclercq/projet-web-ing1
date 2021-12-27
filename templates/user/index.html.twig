@@ -15,7 +15,7 @@
 			<div class="row g-0">
 				<div class="col-md-4 d-flex align-items-center">
 					{% if lastCourse.idCourse.filelink is not null %}
-						<img src="{{ asset('build/files/' ~ lastCourse.idCourse.filelink)}}" class="img-fluid rounded-start" alt="...">
+						<img src="{{ asset(file_dir ~ '/' ~ lastCourse.idCourse.filelink)}}" class="img-fluid rounded-start" alt="...">
 					{% else %}
 						<img src="{{ asset('build/img/study_from_books.png')}}" class="img-fluid rounded-start" alt="...">   
 					{% endif %}
@@ -25,7 +25,9 @@
 						<div class="row">
 							<span class="text-muted col-md-6">{{ lastCourse.idCourse.idCategory.caption }}</span>
 							<span class="text-muted col-md-4">
+								{% if lastCourse.lastDatetime is not null %}
 								<small>{{lastCourse.lastDatetime.format('Y/m/d') }}</small>
+								{% endif %}
 							</span>
 							<a href="#" class="col-md-2 starred" title="Starred" course="{{ lastCourse.idCourse.idCourse }}" user="{{ lastCourse.idUser.idUser }}">
 								{% if lastCourse.starred %}
@@ -73,7 +75,7 @@
 			<div class="row g-0">
 				<div class="col-md-4 d-flex align-items-center">
 					{% if starredCourse.idCourse.filelink is not null %}
-						<img src="{{ asset('build/files/' ~ starredCourse.idCourse.filelink)}}" class="img-fluid rounded-start" alt="...">
+						<img src="{{ asset(file_dir ~ '/' ~ starredCourse.idCourse.filelink)}}" class="img-fluid rounded-start" alt="...">
 					{% else %}
 						<img src="{{ asset('build/img/study_from_books.png')}}" class="img-fluid rounded-start" alt="...">   
 					{% endif %}
@@ -83,7 +85,9 @@
 						<div class="row">
 							<span class="text-muted col-md-6">{{ starredCourse.idCourse.idCategory.caption }}</span>
 							<span class="text-muted col-md-4">
+								{% if starredCourse.lastDatetime is not null %}
 								<small>{{starredCourse.lastDatetime.format('Y/m/d') }}</small>
+								{% endif %}
 							</span>
 							<a href="#" class="col-md-2 starred" title="Starred">
 								{% if starredCourse.starred %}

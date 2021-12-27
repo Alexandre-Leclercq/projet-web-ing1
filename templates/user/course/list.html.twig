@@ -14,7 +14,7 @@
 					<div class="row g-0">
 						<div class="col-md-4 d-flex align-items-center">
 							{% if course.course.filelink is not null %}
-							<img src="{{ asset('build/files/' ~ course.course.filelink)}}" class="img-fluid rounded-start" alt="...">
+							<img src="{{ asset(file_dir ~ '/' ~ course.course.filelink)}}" class="img-fluid rounded-start" alt="...">
                         	{% else %}
 							<img src="{{ asset('build/img/study_from_books.png')}}" class="img-fluid rounded-start" alt="...">   
                         	{% endif %}
@@ -28,7 +28,7 @@
 										<small>{{ course.lastDatetime.format('Y/m/d') }}</small>
 										{% endif %}
 									</span>
-									<a href="#" class="col-md-2 starred" title="Starred" course="{{ lastCourse.idCourse.idCourse }}" user="{{ lastCourse.idUser.idUser }}">
+									<a href="#" class="col-md-2 starred" title="Starred" course="{{ course.course.idCourse }}" user="{{ course.course.idUser.idUser }}">
 										{% if course.starred %}
 										<span class="text-secondary">
 											<i class="fas fa-star"></i>
