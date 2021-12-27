@@ -4,12 +4,12 @@ namespace App\Controller\User;
 
 use App\Entity\Course;
 use App\Entity\CourseStatus;
-use App\Entity\User;
-use App\Repository\CategoryRepository;
-use App\Repository\ChapterRepository;
-use App\Repository\CourseStatusRepository;
 use App\Repository\UserRepository;
+use App\Repository\CourseRepository;
+use App\Repository\ChapterRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\CourseStatusRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,6 +56,23 @@ class CourseController extends AbstractController
         $this->chapterRepository = $chapterRepository;
         $this->userRepository = $userRepository;
         $this->courseStatusRepository = $courseStatusRepository;
+    }
+
+    /**
+     * @Route("/course/list/{id?}", name="user.course.list", requirements={"id"="\d+"})
+     */
+    public function list(CourseRepository $courseRepository, ?int $id = null): Response
+    {
+        //global
+        $user = $this->security->getUser();
+        $categories = $this->categoryRepository->findBy(['active' => true]);
+
+        if (is_null($id))
+            $courses = $courseRepository->findBy(['active' => '1']);
+        else
+            $courses = $courseRepository->findBy(['active' => '1', 'idCategory' => $id]);
+
+        return $this->render('user/course/list.html.twig', ['user' => $user, 'categories' => $categories, 'courses' => $courses]);
     }
 
     /**

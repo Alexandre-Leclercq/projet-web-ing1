@@ -28,12 +28,12 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownCourses">
                                 {% for category in categories %}
                                     <li>
-                                        <a class="dropdown-item" href="{{ path('listCourse', {id: category.idCategory}) }}">{{ category.caption }}</a>
+                                        <a class="dropdown-item" href="{{ path('user.course.list', {id: category.idCategory}) }}">{{ category.caption }}</a>
                                     </li>
                                 {% endfor %}
                                     <hr>
                                     <li>
-                                        <a class="dropdown-item" href="{{ path('listCourse') }}">See all</a>
+                                        <a class="dropdown-item" href="{{ path('user.course.list') }}">See all</a>
                                     </li>
                                 </ul>
                             </li>
