@@ -68,7 +68,7 @@
 	</div>
 	{% endif %}
 	{% if starredCourses is not empty %}
-	<h1 class="mb-2">Favorite</h1>
+	<h1 class="mb-2">Favourites</h1>
 	{% for starredCourse in starredCourses %}
 	<div class="row justify-content-center mb-5">
 		<div class="card shadow" style="max-width: 675px;">
@@ -111,12 +111,12 @@
 							<span class="text-muted col-md-6">
 								{{ starredCourse.idUser.firstName ~ ' ' ~ starredCourse.idUser.lastName }}
 							</span>
-							{% if lastCourse.lastChapterReading is null %}
-							<a href="{{ path('user.course.content', {course: lastCourse.idCourse.idCourse}) }}" class="text-primary col-md-6">Start
+							{% if starredCourse.lastChapterReading is null %}
+							<a href="{{ path('user.course.content', {course: starredCourse.idCourse.idCourse}) }}" class="text-primary col-md-6">Start
 								<i class="fas fa-arrow-right"></i>
 							</a>
 							{% else %}
-							<a href="{{ path('user.course.content', {course: lastCourse.idCourse.idCourse, step: lastCourse.lastChapterReading.step}) }}" class="text-primary col-md-6">Continue
+							<a href="{{ path('user.course.content', {course: starredCourse.idCourse.idCourse, step: starredCourse.lastChapterReading.step}) }}" class="text-primary col-md-6">Continue
 								<i class="fas fa-arrow-right"></i>
 							</a>
 							{% endif %}
