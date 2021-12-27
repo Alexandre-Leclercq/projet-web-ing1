@@ -1,11 +1,12 @@
 doctrine:
     dbal:
-        dbname: '%env(DATABASE_DBNAME)%'
-        host: '%env(DATABASE_HOST)%'
-        port: '%env(DATABASE_PORT)%'
-        user: '%env(DATABASE_USER)%'
-        password: '%env(DATABASE_PASSWORD)%'
-        server_version: '%env(DATABASE_SERVER_VERSION)%'
+        # dbname: '%env(DATABASE_DBNAME)%'
+        # host: '%env(DATABASE_HOST)%'
+        # port: '%env(DATABASE_PORT)%'
+        # user: '%env(DATABASE_USER)%'
+        # password: '%env(DATABASE_PASSWORD)%'
+        url: "mysql://%env(DATABASE_USER)%:%env(DATABASE_PASSWORD)%@%env(DATABASE_HOST)%:%env(DATABASE_PORT)%/%env(DATABASE_DBNAME)%?serverVersion=%env(DATABASE_SERVER_VERSION)%"
+        # server_version: '%env(DATABASE_SERVER_VERSION)%'
         driver: pdo_mysql
         charset: UTF8
     orm:
