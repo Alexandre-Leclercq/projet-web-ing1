@@ -12,7 +12,7 @@
                 {% else %}
             <li>       
                 {% endif %}    
-                <a href="{{ path("user.course", {course: chapter.idCourse.idCourse, step: tmpChapter.step}) }}">{{ tmpChapter.caption }}</a>
+                <a href="{{ path("user.course.content", {course: chapter.idCourse.idCourse, step: tmpChapter.step}) }}">{{ tmpChapter.caption }}</a>
             </li> 
             {% endfor %}
         </ol>
@@ -38,11 +38,11 @@
 </div>
 <div class="controls mb-3">
     {% if chapter.step != 1 %}
-    <a href="{{ path("user.course", {course: chapter.idCourse.idCourse, step: chapter.step - 1}) }}" class="btn btn-previous shadow-sm">Previous</a>
+    <a href="{{ path("user.course.content", {course: chapter.idCourse.idCourse, step: chapter.step - 1}) }}" class="btn btn-previous shadow-sm">Previous</a>
     {% endif %}
     <div class="spacer"></div>
     {% if chapter.step < chapters|length %}
-    <a href="{{ path("user.course", {course: chapter.idCourse.idCourse, step: chapter.step + 1}) }}" class="btn btn-next shadow-sm">Next</a>
+    <a href="{{ path("user.course.content", {course: chapter.idCourse.idCourse, step: chapter.step + 1}) }}" class="btn btn-next shadow-sm">Next</a>
     {% endif %}
 </div>
 {% endblock %}
