@@ -100,11 +100,11 @@
 								{{ starredCourse.idUser.firstName ~ ' ' ~ starredCourse.idUser.lastName }}
 							</span>
 							{% if lastCourse.lastChapterReading is null %}
-							<a href="{{ path('user.course', {course: lastCourse.idCourse.idCourse}) }}" class="text-primary col-md-6">Start
+							<a href="{{ path('user.course.content', {course: lastCourse.idCourse.idCourse}) }}" class="text-primary col-md-6">Start
 								<i class="fas fa-arrow-right"></i>
 							</a>
 							{% else %}
-							<a href="{{ path('user.course', {course: lastCourse.idCourse.idCourse, step: lastCourse.lastChapterReading.step}) }}" class="text-primary col-md-6">Continue
+							<a href="{{ path('user.course.content', {course: lastCourse.idCourse.idCourse, step: lastCourse.lastChapterReading.step}) }}" class="text-primary col-md-6">Continue
 								<i class="fas fa-arrow-right"></i>
 							</a>
 							{% endif %}
