@@ -59,7 +59,7 @@ class CourseController extends AbstractController
     }
 
     /**
-     * @Route("/course/content/{course}/{step}", name="user.course", requirements={"course"="\d+", "step"="\d+"})
+     * @Route("/course/content/{course}/{step}", name="user.course.content", requirements={"course"="\d+", "step"="\d+"})
      * 
      * @param Course $course
      * @param int $step
