@@ -105,7 +105,7 @@ class AjaxController extends AbstractController
     public function chapterJson(int $idCourse, ChapterRepository $chapterRepository, AjaxResponseJson $ajaxResponseJson): JsonResponse
     {
         $chapters = $chapterRepository->getListChapter($idCourse);
-        return new JsonResponse($ajaxResponseJson->listChapterEditor($chapters, $idCourse));
+        return new JsonResponse($ajaxResponseJson->listChapterEditor($chapters));
     }
 
     /**

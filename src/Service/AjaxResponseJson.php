@@ -147,7 +147,7 @@ class AjaxResponseJson
         }
     }
 
-    function formatActionChapter($active, $idChapter)
+    function formatActionChapter($active, $idChapter, $idCourse, $step)
 {
     try {
         $action = '<div class="btn-group" role="group" aria-label="Action button">';
@@ -163,6 +163,11 @@ class AjaxResponseJson
                                 <i class="fas fa-clone"></i>
                             </span>
                         </a>&nbsp;';
+        $action .= '<a class="btn btn-sm btn-primary" target="_blank" href="'.$this->router->generate('user.course.content', ['course' => $idCourse->getIdCourse(), 'step' => $step]).'" title="Voir"> 
+            <span class="icon text-white">
+                <i class="fas fa-eye"></i>
+            </span>
+        </a>&nbsp;';
         if ($active) {
             $action .= '<a class="btn btn-sm  btn-primary activeButton" value="1" title="Actif"> 
                             <span class="icon text-white">
@@ -178,7 +183,7 @@ class AjaxResponseJson
         }
         return $action;
     } catch (\Exception $e) {
-        return null;
+        return $e->getMessage();
     }
 }
     
@@ -187,7 +192,7 @@ class AjaxResponseJson
      * @return string
      * Return json data for the datatable
      */
-    public function listChapterEditor($chapters, $idCourse): array
+    public function listChapterEditor($chapters): array
     {
         try {
             $tmp = [];
@@ -196,7 +201,7 @@ class AjaxResponseJson
                     'id' => $chapter->getIdChapter(),
                     'caption' => $chapter->getCaption(),
                     'step' => $chapter->getStep(),
-                    'action' => $this->formatActionChapter($chapter->getActive(), $chapter->getIdChapter())
+                    'action' => $this->formatActionChapter($chapter->getActive(), $chapter->getIdChapter(), $chapter->getIdCourse(), $chapter->getStep())
                 ];
             }
             return $tmp;
