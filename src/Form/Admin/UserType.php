@@ -45,6 +45,7 @@ class UserType extends AbstractType
                     return $er->createQueryBuilder('r')
                         ->andWhere('r.active = 1');
                 },
+                'label_format' => 'Role',
                 'choice_label' => 'externCaption',
                 'required' => true,
                 'multiple' => false,
