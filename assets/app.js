@@ -13,3 +13,7 @@ const $ = require('jquery');
 import 'datatables';
 
 import 'datatables.net-bs5';
+
+import 'datatables.net-responsive-bs5';
+
+//import 'datatables.net-responsive-bs';
