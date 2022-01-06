@@ -101,7 +101,7 @@
 								<small>{{starredCourse.lastDatetime.format('Y/m/d') }}</small>
 								{% endif %}
 							</span>
-							<a href="#" class="col-md-2 starred" title="Starred">
+							<a href="#" class="col-md-2 starred" title="Starred" course="{{ starredCourse.idCourse.idCourse }}" user="{{ starredCourse.idUser.idUser }}">
 								{% if starredCourse.starred %}
 								<span class="text-secondary">
 									<i class="fas fa-star"></i>
