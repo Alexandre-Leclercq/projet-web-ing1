@@ -8,6 +8,18 @@
 {% endblock %}
 {% block main %}
 <div class="container mt-5">
+	{% if lastCourse is null and starredCourses is empty %}
+		<div class="card shadow p-5">
+			<h1 class="display-5 fw-bold text-primary text-center mb-5">Let's get started by picking a new course !</h1> 
+			<div class="mx-auto my-2">
+				<a href="{{ path('user.course.list') }}" class="btn btn-primary">
+					<span class="text-white">
+						<i class="fas fa-arrow-right"></i>
+					</span>
+				</a>
+			</div>
+		</div>
+	{% endif %}
 	{% if lastCourse is not null %}
 	<h1 class="mb-2">Last Course</h1>
 	<div class="row justify-content-center mb-5">
