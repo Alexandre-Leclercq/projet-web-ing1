@@ -76,7 +76,12 @@ class UserController extends AbstractController
             }
             $this->em->persist($user);
             $this->em->flush();
-            return $this->redirectToRoute('admin.user.list');
+            if($user->getIdRole()->getIdRole() == $this->getParameter('user.idRole.admin')){
+                return $this->redirectToRoute('admin.user.list');
+            } else {
+                return $this->redirectToRoute('index');
+            }
+            
         }
         return $this->render('admin/user/edit.html.twig', [
             'user' => $this->security->getUser(),

@@ -104,6 +104,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->idRole;
     }
 
+    public function setIdRole(Role $idRole): self
+    {
+        $this->idRole = $idRole;
+
+        return $this;
+    }
+
     /**
      * A visual identifier that represents this user.
      *
