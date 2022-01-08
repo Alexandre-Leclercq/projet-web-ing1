@@ -41,6 +41,11 @@ class ChapterController extends AbstractController
     {
         //global
         $user = $this->security->getUser();
+
+        if($user->getIdRole()->getIdRole() != $this->getParameter('user.idRole.admin') && $user != $course->getIdUser()){ // if the user isn't autorize to edit this course
+            return $this->redirectToRoute('editor.course.list');
+        }
+
         $categories = $this->categoryRepository->findBy(['active' => true]);
 
         return $this->render('editor/chapter/list.html.twig', [
@@ -56,6 +61,11 @@ class ChapterController extends AbstractController
     public function edit(Chapter $chapter, Request $request)
     {
         $user = $this->security->getUser();
+
+        if($user->getIdRole()->getIdRole() != $this->getParameter('user.idRole.admin') && $user != $chapter->getIdCourse()->getIdUser()){ // if the user isn't autorize to edit this course
+            return $this->redirectToRoute('editor.course.list');
+        }
+
         $id = $chapter->getIdCourse()->getIdCourse();
         $form = $this->createForm(EditChapterType::class, $chapter);
         $form->handleRequest($request);
@@ -79,6 +89,11 @@ class ChapterController extends AbstractController
     public function add(Course $course, Request $request, ChapterRepository $chapterRepository)
     {
         $user = $this->security->getUser();
+
+        if($user->getIdRole()->getIdRole() != $this->getParameter('user.idRole.admin') && $user != $course->getIdUser()){ // if the user isn't autorize to edit this course
+            return $this->redirectToRoute('editor.course.list');
+        }
+
         $chapter = new Chapter();
         $chapter->setIdCourse($course);
         $id = $course->getIdCourse();
@@ -107,6 +122,11 @@ class ChapterController extends AbstractController
     public function duplicate(Chapter $chapter, Request $request, ChapterRepository $chapterRepository)
     {
         $user = $this->security->getUser();
+
+        if($user->getIdRole()->getIdRole() != $this->getParameter('user.idRole.admin') && $user != $chapter->getIdCourse()->getIdUser()){ // if the user isn't autorize to edit this course
+            return $this->redirectToRoute('editor.course.list');
+        }
+
         $id = $chapter->getIdCourse()->getIdCourse();
         $chapterDuplicate = new Chapter();
         $chapterDuplicate->setIdCourse($chapter->getIdCourse())

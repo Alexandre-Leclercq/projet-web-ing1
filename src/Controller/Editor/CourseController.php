@@ -5,8 +5,6 @@ namespace App\Controller\Editor;
 use App\Entity\Course;
 use App\Form\Editor\CourseType;
 use App\Services\FileUploader;
-use App\Repository\CourseRepository;
-use App\Repository\ChapterRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,6 +53,9 @@ class CourseController extends AbstractController
     public function edit(Course $course, Request $request, FileUploader $fileUploader)
     {
         $user = $this->security->getUser();
+        if($user->getIdRole()->getIdRole() != $this->getParameter('user.idRole.admin') && $user != $course->getIdUser()){ // if the user isn't autorize to edit this course
+            return $this->redirectToRoute('editor.course.list');
+        }
 
         $form = $this->createForm(CourseType::class, $course, [
             'admin' => $user->getIdRole()->getIdRole() == $this->getParameter('user.idRole.admin') ? true : false
@@ -113,9 +114,13 @@ class CourseController extends AbstractController
     /**
      * @Route("/editor/course/duplicate/{id}", name="editor.course.duplicate", requirements={"id"="\d+"})
      */
-    public function duplicate(Course $course, Request $request, FileUploader $fileUploader, ChapterRepository $chapterRepository)
+    public function duplicate(Course $course, Request $request, FileUploader $fileUploader)
     {
         $user = $this->security->getUser();
+
+        if($user->getIdRole()->getIdRole() != $this->getParameter('user.idRole.admin') && $user != $course->getIdUser()){ // if the user isn't autorize to edit this course
+            return $this->redirectToRoute('editor.course.list');
+        }
 
         $courseDuplicate = new Course();
         $courseDuplicate->setCaption($course->getCaption())
