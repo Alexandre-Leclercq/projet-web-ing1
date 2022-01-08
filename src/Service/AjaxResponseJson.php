@@ -30,7 +30,7 @@ class AjaxResponseJson
                                 </span>
                             </a>&nbsp;';
             } else {
-                $action .= '<a class="btn btn-sm  btn-primary activeButton" value="0" title="Actif"> 
+                $action .= '<a class="btn btn-sm  btn-danger activeButton" value="0" title="Actif"> 
                                 <span class="icon text-white">
                                     <i class="fas fa-times"></i>
                                 </span>
@@ -111,7 +111,7 @@ class AjaxResponseJson
                                 </span>
                             </a>&nbsp;';
             } else {
-                $action .= '<a class="btn btn-sm  btn-primary activeButton" value="0" title="Actif"> 
+                $action .= '<a class="btn btn-sm  btn-danger activeButton" value="0" title="Actif"> 
                                 <span class="icon text-white">
                                     <i class="fas fa-times"></i>
                                 </span>
@@ -175,7 +175,7 @@ class AjaxResponseJson
                             </span>
                         </a>&nbsp;</div>';
         } else {
-            $action .= '<a class="btn btn-sm  btn-primary activeButton" value="0" title="Actif"> 
+            $action .= '<a class="btn btn-sm  btn-danger activeButton" value="0" title="Actif"> 
                             <span class="icon text-white">
                                 <i class="fas fa-times"></i>
                             </span>
