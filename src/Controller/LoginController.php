@@ -11,6 +11,9 @@ class LoginController extends AbstractController
 {
     /**
      * @Route("/login", name="login")
+     * 
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
      */
     public function index(AuthenticationUtils $authenticationUtils): Response
     {

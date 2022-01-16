@@ -32,14 +32,23 @@ class AjaxController extends AbstractController
 
     /**
      * @Route("/ajax/user/getJson", name="getUserJson")
+     * 
+     * @param AjaxResponseJson $ajaxResponseJson
+     * @param UserRepository $userRepository
+     * @return JsonResponse
      */
-    public function userJson(AjaxResponseJson $ajaxResponseJson, UserRepository $userRepository)
+    public function userJson(AjaxResponseJson $ajaxResponseJson, UserRepository $userRepository): JsonResponse
     {
         return new JsonResponse($ajaxResponseJson->listUserEditor($userRepository->findAll()));
     }
 
     /**
      * @Route("/ajax/user/changeActive", name="changeActiveUser")
+     * 
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * 
+     * @return Response
      */
     public function changeActiveUser(Request $request, UserRepository $userRepository): Response
     {
@@ -55,6 +64,11 @@ class AjaxController extends AbstractController
 
     /**
      * @Route("/ajax/course/getJson", name="getCourseJson")
+     * 
+     * @param CourseRepository $courseRepository
+     * @param AjaxResponseJson $ajaxResponseJson
+     * @param Security $security
+     * @return JsonResponse
      */
     public function courseJson(CourseRepository $courseRepository, AjaxResponseJson $ajaxResponseJson, Security $security): JsonResponse
     {
@@ -68,6 +82,10 @@ class AjaxController extends AbstractController
 
     /**
      * @Route("/ajax/course/changeActive", name="changeActiveCourse")
+     * 
+     * @param Request $request
+     * @param CourseRepository $courseRepository
+     * @return Response
      */
     public function changeActiveCourse(Request $request, CourseRepository $courseRepository): Response
     {
@@ -76,11 +94,16 @@ class AjaxController extends AbstractController
         $this->em->persist($course);
         $this->em->flush();
         $this->em->clear();
-        return new Response('');
+        return new Response(null);
     }
 
     /**
      * @Route("/ajax/course/changeStarred", name="changeStarredCourse")
+     * 
+     * @param Request $request
+     * @param CourseStatusRepository $courseStatusRepository
+     * @param UserRepository $userRepository
+     * @return Response
      */
     public function changeStarredCourse(Request $request, CourseStatusRepository $courseStatusRepository, CourseRepository $courseRepository, UserRepository $userRepository): Response
     {
@@ -101,6 +124,11 @@ class AjaxController extends AbstractController
 
     /**
      * @Route("/ajax/chapter/getJson/{idCourse}", name="getChapterJson", requirements={"idCourse"="\d+"})
+     * 
+     * @param int $idCourse
+     * @param ChapterRepository $chapterRepository
+     * @param AjaxResponseJson $ajaxResponseJson
+     * @return JsonResponse
      */
     public function chapterJson(int $idCourse, ChapterRepository $chapterRepository, AjaxResponseJson $ajaxResponseJson): JsonResponse
     {
@@ -110,6 +138,10 @@ class AjaxController extends AbstractController
 
     /**
      * @Route("/ajax/course/changeActiveChapter", name="changeActiveChapter")
+     * 
+     * @param Request $request
+     * @param ChapterRepository $chapterRepository
+     * @return Response
      */
     public function changeActiveChapter(Request $request, ChapterRepository $chapterRepository): Response
     {
@@ -118,6 +150,6 @@ class AjaxController extends AbstractController
         $this->em->persist($chapter);
         $this->em->flush();
         $this->em->clear();
-        return new Response('');
+        return new Response(null);
     }
 }
