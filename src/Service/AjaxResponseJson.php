@@ -12,8 +12,12 @@ class AjaxResponseJson
     {
         $this->router = $router;
     }
-
-    private function formatActionUser($idUser, $active)
+    /**
+     * @param int $idUser
+     * @param int $active
+     * Create the button for the datatable user
+     */
+    private function formatActionUser($idUser, $active): string
     {
         try {
             $action = '<div class="btn-group" role="group" aria-label="Action button">';
@@ -42,58 +46,70 @@ class AjaxResponseJson
         }
     }
 
+    /**
+     * @param User[]
+     * @return array
+     * Create the array that contains the informations about users
+     */
     public function listUserEditor($users): array
     {
-        try{
-            
+        try {
+
             $tmp = [];
-            foreach($users as $user){
+            foreach ($users as $user) {
                 $tmp[] = [
                     'id' => $user->getIdUser(),
                     'name' => $user->getFirstName() . ' ' . $user->getLastName(),
-                    'role' =>  '<span class="badge rounded-pill bg-'.$user->getIdRole()->getColor().'">'.$user->getIdRole()->getExternCaption().'</span>',
+                    'role' =>  '<span class="badge rounded-pill bg-' . $user->getIdRole()->getColor() . '">' . $user->getIdRole()->getExternCaption() . '</span>',
                     'dateLog' => is_null($user->getDateLog()) ? '' : $user->getDateLog()->format('d/m/Y H:i:s'),
                     'action' => $this->formatActionUser($user->getIdUser(), $user->getActive()),
                 ];
             }
             return $tmp;
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return [];
         }
     }
 
-    private function formatActionCourse($idCourse, $active, $qtyChapter)
+    /**
+     * @param int $idCourse
+     * @param int $active
+     * @param int $qtyChapter
+     * @return string
+     * Create the button for the datatable course
+     */
+    private function formatActionCourse($idCourse, $active, $qtyChapter): string
     {
         try {
             $action = '<div class="btn-group" role="group" aria-label="Action button">';
             // edit button
-            $action .= '<a class="btn btn-sm  btn-primary" href="'. $this->router->generate('editor.course.edit', ['id' => $idCourse]) .'" title="Modifier"> 
+            $action .= '<a class="btn btn-sm  btn-primary" href="' . $this->router->generate('editor.course.edit', ['id' => $idCourse]) . '" title="Modifier"> 
                                     <span class="icon text-white">
                                         <i class="fas fa-edit"></i> 
                                     </span>
                                 </a>&nbsp;';
             // duplicat button
-            $action .= '<a class="btn btn-sm  btn-primary" href="'.$this->router->generate('editor.course.duplicate', ['id' => $idCourse]).'" title="Dupliquer"> 
+            $action .= '<a class="btn btn-sm  btn-primary" href="' . $this->router->generate('editor.course.duplicate', ['id' => $idCourse]) . '" title="Dupliquer"> 
                                 <span class="icon text-white">
                                     <i class="fas fa-clone"></i>
                                 </span>
                             </a>&nbsp;';
             // see button
             if ($qtyChapter <= 0) {
-                $action .= '<a class="btn btn-sm btn-primary disabled" target="_blank" href="'.$this->router->generate('user.course.content', ['course' => $idCourse]).'" title="Voir"> 
+                $action .= '<a class="btn btn-sm btn-primary disabled" target="_blank" href="' . $this->router->generate('user.course.content', ['course' => $idCourse]) . '" title="Voir"> 
                             <span class="icon text-white">
                                 <i class="fas fa-eye"></i>
                             </span>
                         </a>&nbsp;';
             } else {
-                $action .= '<a class="btn btn-sm btn-primary" target="_blank" href="'.$this->router->generate('user.course.content', ['course' => $idCourse]).'" title="Voir"> 
+                $action .= '<a class="btn btn-sm btn-primary" target="_blank" href="' . $this->router->generate('user.course.content', ['course' => $idCourse]) . '" title="Voir"> 
                             <span class="icon text-white">
                                 <i class="fas fa-eye"></i>
                             </span>
                         </a>&nbsp;';
             }
             // add chapter button
-            $action .= '<a class="btn btn-sm  btn-primary" title="Ajouter un chapitre" href="'.$this->router->generate('editor.chapter.add', ['id' => $idCourse]).'"> 
+            $action .= '<a class="btn btn-sm  btn-primary" title="Ajouter un chapitre" href="' . $this->router->generate('editor.chapter.add', ['id' => $idCourse]) . '"> 
                             <span class="icon text-white">
                                 <i class="fas fa-plus"></i>
                             </span>
@@ -124,9 +140,9 @@ class AjaxResponseJson
     }
 
     /**
-     * @var Course[] $courses
+     * @param Course[] $courses
      * @return string
-     * Return json data for the datatable
+     * Create the array that contains the informations about courses
      */
     public function listCourseEditor($courses): array
     {
@@ -142,55 +158,63 @@ class AjaxResponseJson
                 ];
             }
             return $tmp;
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             [];
         }
     }
 
-    function formatActionChapter($active, $idChapter, $idCourse, $step)
-{
-    try {
-        $action = '<div class="btn-group" role="group" aria-label="Action button">';
-        // edit button
-        $action .= '<a class="btn btn-sm  btn-primary" href="'.$this->router->generate('editor.chapter.edit', ['id' => $idChapter]).'" title="Modifier"> 
+    /**
+     * @param Course $idCourse
+     * @param int $active
+     * @param int $idChapter
+     * @param int $step
+     * @return string
+     * Create the button for the datatable chapter
+     */
+    function formatActionChapter($active, $idChapter, $idCourse, $step): string
+    {
+        try {
+            $action = '<div class="btn-group" role="group" aria-label="Action button">';
+            // edit button
+            $action .= '<a class="btn btn-sm  btn-primary" href="' . $this->router->generate('editor.chapter.edit', ['id' => $idChapter]) . '" title="Modifier"> 
                                 <span class="icon text-white">
                                     <i class="fas fa-edit"></i> 
                                 </span>
                             </a>&nbsp;';
-        // duplicat button
-        $action .= '<a class="btn btn-sm  btn-primary" href="'.$this->router->generate('editor.chapter.duplicate', ['id' => $idChapter]).'&duplicat" title="Dupliquer"> 
+            // duplicat button
+            $action .= '<a class="btn btn-sm  btn-primary" href="' . $this->router->generate('editor.chapter.duplicate', ['id' => $idChapter]) . '&duplicat" title="Dupliquer"> 
                             <span class="icon text-white">
                                 <i class="fas fa-clone"></i>
                             </span>
                         </a>&nbsp;';
-        $action .= '<a class="btn btn-sm btn-primary" target="_blank" href="'.$this->router->generate('user.course.content', ['course' => $idCourse->getIdCourse(), 'step' => $step]).'" title="Voir"> 
+            $action .= '<a class="btn btn-sm btn-primary" target="_blank" href="' . $this->router->generate('user.course.content', ['course' => $idCourse->getIdCourse(), 'step' => $step]) . '" title="Voir"> 
             <span class="icon text-white">
                 <i class="fas fa-eye"></i>
             </span>
         </a>&nbsp;';
-        if ($active) {
-            $action .= '<a class="btn btn-sm  btn-primary activeButton" value="1" title="Actif"> 
+            if ($active) {
+                $action .= '<a class="btn btn-sm  btn-primary activeButton" value="1" title="Actif"> 
                             <span class="icon text-white">
                                 <i class="fas fa-check"></i>
                             </span>
                         </a>&nbsp;</div>';
-        } else {
-            $action .= '<a class="btn btn-sm  btn-danger activeButton" value="0" title="Actif"> 
+            } else {
+                $action .= '<a class="btn btn-sm  btn-danger activeButton" value="0" title="Actif"> 
                             <span class="icon text-white">
                                 <i class="fas fa-times"></i>
                             </span>
                         </a>&nbsp;</div>';
+            }
+            return $action;
+        } catch (\Exception $e) {
+            return $e->getMessage();
         }
-        return $action;
-    } catch (\Exception $e) {
-        return $e->getMessage();
     }
-}
-    
+
     /**
-     * @var Chapter[] $chapters
-     * @return string
-     * Return json data for the datatable
+     * @param Chapter[] $chapters
+     * @return array
+     * Create the array that contains the informations about chapters
      */
     public function listChapterEditor($chapters): array
     {
@@ -205,7 +229,7 @@ class AjaxResponseJson
                 ];
             }
             return $tmp;
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             [];
         }
     }
