@@ -57,7 +57,7 @@ class IndexController extends AbstractController
             $this->em->flush();
             $this->em->clear();
 
-            $lastCourse = $this->courseStatusRepository->findOneBy(['idUser' => $user], ['lastDatetime' => 'DESC']);
+            $lastCourse = $this->courseStatusRepository->lastCourse($user);
             $starredCourses = $this->courseStatusRepository->findBy(['idUser' => $user, 'starred' => true], ['lastDatetime' => 'DESC']);
 
             return $this->render('user/index.html.twig', [

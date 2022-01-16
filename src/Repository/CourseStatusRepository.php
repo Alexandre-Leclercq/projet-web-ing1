@@ -18,6 +18,20 @@ class CourseStatusRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, CourseStatus::class);
     }
+    
+    public function lastCourse($user): ?CourseStatus
+    {
+        return $this->createQueryBuilder('cs')
+            ->andWhere('cs.idUser = :user')
+            ->andWhere('cs.lastDatetime IS NOT NULL')
+            ->orderBy('cs.lastDatetime', 'DESC')
+            ->setParameter('user', $user)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    
 
     // /**
     //  * @return CourseStatus[] Returns an array of CourseStatus objects
