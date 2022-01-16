@@ -43,6 +43,9 @@ class IndexController extends AbstractController
 
     /**
      * @Route("/", name="index")
+     * 
+     * @param UserRepository $userRepository
+     * @return Response
      */
     public function index(UserRepository $userRepository): Response
     {

@@ -25,6 +25,11 @@ class CourseController extends AbstractController
      */
     private $categoryRepository;
 
+    /**
+     * @var ObjectManager
+     */
+    private $em;
+
     public function __construct(Security $security, CategoryRepository $categoryRepository, ManagerRegistry $managerRegistry)
     {
         $this->security = $security;
@@ -34,6 +39,8 @@ class CourseController extends AbstractController
 
     /**
      * @Route("/editor/course/list", name="editor.course.list")
+     * 
+     * @return Response
      */
     public function list(): Response
     {
@@ -49,8 +56,13 @@ class CourseController extends AbstractController
 
     /**
      * @Route("/editor/course/edit/{id}", name="editor.course.edit", requirements={"id"="\d+"})
+     * 
+     * @param Course $course
+     * @param Request $request
+     * @param FileUpload $fileUploader
+     * @return Response
      */
-    public function edit(Course $course, Request $request, FileUploader $fileUploader)
+    public function edit(Course $course, Request $request, FileUploader $fileUploader): Response
     {
         $user = $this->security->getUser();
         if($user->getIdRole()->getIdRole() != $this->getParameter('user.idRole.admin') && $user != $course->getIdUser()){ // if the user isn't autorize to edit this course
@@ -62,7 +74,6 @@ class CourseController extends AbstractController
         ]);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-
             if(!is_null($form->get('image')->getData())){
                 $filename = $fileUploader->uploadFile($form->get('image')->getData());
                 $course->setFilelink($filename);
@@ -82,8 +93,12 @@ class CourseController extends AbstractController
 
     /**
      * @Route("/editor/course/add", name="editor.course.add")
+     * 
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @return Response
      */
-    public function add(Request $request, FileUploader $fileUploader)
+    public function add(Request $request, FileUploader $fileUploader): Response
     {
         $user = $this->security->getUser();
 
@@ -113,8 +128,13 @@ class CourseController extends AbstractController
 
     /**
      * @Route("/editor/course/duplicate/{id}", name="editor.course.duplicate", requirements={"id"="\d+"})
+     * 
+     * @param Course $course
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @return Response
      */
-    public function duplicate(Course $course, Request $request, FileUploader $fileUploader)
+    public function duplicate(Course $course, Request $request, FileUploader $fileUploader): Response
     {
         $user = $this->security->getUser();
 
@@ -150,13 +170,5 @@ class CourseController extends AbstractController
             'form' => $form->createView(),
             'typeForm' => 'Duplicate '.$courseDuplicate->getCaption()
         ]);
-    }
-
-    /**
-     * @route("editor/course/see", name="editor.course.see")
-     */
-    public function seeCourse(): Response
-    {
-        return new Response('');
     }
 }

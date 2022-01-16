@@ -60,6 +60,9 @@ class CourseController extends AbstractController
 
     /**
      * @Route("/course/list/{idCategory?}", name="user.course.list", requirements={"idCategory"="\d+"})
+     * 
+     * @param CourseRepository $courseRepository
+     * @return Response
      */
     public function list(CourseRepository $courseRepository, ?int $idCategory = null): Response
     {
