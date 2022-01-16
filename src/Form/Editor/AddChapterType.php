@@ -14,7 +14,7 @@ class AddChapterType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $option
+     * @param array $options
      * @return void
      * Create the add chapter form
      */

@@ -20,7 +20,7 @@ class CourseType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $option
+     * @param array $options
      * @return void
      * Create the course form
      */
