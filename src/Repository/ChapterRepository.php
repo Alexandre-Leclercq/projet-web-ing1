@@ -19,6 +19,9 @@ class ChapterRepository extends ServiceEntityRepository
         parent::__construct($registry, Chapter::class);
     }
 
+    /**
+     * get the chapter list of a course
+     */
     public function getListChapter($idCourse)
     {
         return $this->createQueryBuilder('c')
@@ -28,6 +31,9 @@ class ChapterRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * give the max step of a course
+     */
     public function findMaxStep($idCourse)
     {
         return $this->createQueryBuilder('c')
@@ -37,32 +43,4 @@ class ChapterRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
-    // /**
-    //  * @return Chapter[] Returns an array of Chapter objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Chapter
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

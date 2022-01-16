@@ -19,6 +19,7 @@ class CourseStatusRepository extends ServiceEntityRepository
         parent::__construct($registry, CourseStatus::class);
     }
     
+    // get the last course a user visit
     public function lastCourse($user): ?CourseStatus
     {
         return $this->createQueryBuilder('cs')
@@ -31,34 +32,4 @@ class CourseStatusRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-    
-
-    // /**
-    //  * @return CourseStatus[] Returns an array of CourseStatus objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?CourseStatus
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

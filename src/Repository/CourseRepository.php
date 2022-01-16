@@ -21,6 +21,9 @@ class CourseRepository extends ServiceEntityRepository
         parent::__construct($registry, Course::class);
     }
 
+    /**
+     * give the list of course that could be filter by category
+     */
     public function getUserListCourse($idUser, $idCategory = null)
     {
         if(is_null($idCategory)){
@@ -54,6 +57,9 @@ class CourseRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * get the list of course that an editor possessed
+     */
     public function getListEditorCourse($idUser, bool $admin)
     {
         if ($admin) {
@@ -76,32 +82,4 @@ class CourseRepository extends ServiceEntityRepository
                 ->getResult();
         }
     }
-    // /**
-    //  * @return Course[] Returns an array of Course objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Course
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
