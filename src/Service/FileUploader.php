@@ -24,10 +24,15 @@ class FileUploader
         $this->slugger = $slugger;
     }
 
-    public function uploadFile(UploadedFile $file)
+    /**
+     * @param UploadedFile  $file
+     * @return string
+     * Upload the given file
+     */
+    public function uploadFile(UploadedFile $file): string
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $fileName = uniqid().'_'.$this->slugger->slug($originalFilename).'.'.$file->getClientOriginalExtension();
+        $fileName = uniqid().'_'.$this->slugger->slug($originalFilename).'.'.$file->getClientOriginalExtension(); //get the name of the file
         try {
             $file->move(
                 $this->targetDirectory,
