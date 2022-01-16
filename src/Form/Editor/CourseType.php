@@ -18,6 +18,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class CourseType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $option
+     * @return void
+     * Create the course form
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

@@ -20,6 +20,12 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class UserType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $option
+     * @return void
+     * Create the profile form
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

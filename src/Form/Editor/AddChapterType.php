@@ -12,6 +12,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AddChapterType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $option
+     * @return void
+     * Create the add chapter form
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

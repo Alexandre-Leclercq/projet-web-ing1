@@ -5,9 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>{% block title %}{{ app_name }}{% endblock %}</title>
-        {{ encore_entry_link_tags('js/app') }}
+        {{ encore_entry_link_tags('js/app') }}{# Generate global CSS #}
         {% block stylesheets %}{% endblock %}
-        {{ encore_entry_script_tags('js/app') }}
+        {{ encore_entry_script_tags('js/app') }}{# Generate global JS #}
         {% block javascripts %}{% endblock %}
         <link rel="icon" href="{{ asset('build/img/favicon.ico') }}" type="image/png">
     </head>
@@ -103,7 +103,7 @@
             </div>
         </nav>
         <main>
-            {% set flash = app.flashes %}
+            {% set flash = app.flashes %}{# Flash system #}
             {% if flash is not empty %}
             <div class="container my-5">
             {% if flash.success is defined %}
@@ -127,7 +127,7 @@
             
             {% block main %}{% endblock %}
         </main>
-        <footer class="footer mt-auto py-3 bg-primary">
+        <footer class="footer mt-auto py-3 bg-primary">{# Footer #}
             <div class="container">
                 <div class="row row-cols-lg-5 py-5 my-5">
                     <div class="col">
