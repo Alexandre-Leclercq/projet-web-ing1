@@ -47,7 +47,7 @@ class AjaxResponseJson
     }
 
     /**
-     * @param User[]
+     * @param User[] $users
      * @return array
      * Create the array that contains the informations about users
      */
@@ -141,7 +141,7 @@ class AjaxResponseJson
 
     /**
      * @param Course[] $courses
-     * @return string
+     * @return array
      * Create the array that contains the informations about courses
      */
     public function listCourseEditor($courses): array
