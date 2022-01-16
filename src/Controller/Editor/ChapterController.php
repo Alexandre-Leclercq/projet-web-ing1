@@ -4,10 +4,11 @@ namespace App\Controller\Editor;
 
 use App\Entity\Course;
 use App\Entity\Chapter;
-use App\Form\Editor\EditChapterType;
 use App\Form\Editor\AddChapterType;
+use App\Form\Editor\EditChapterType;
 use App\Repository\ChapterRepository;
 use App\Repository\CategoryRepository;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -27,6 +28,11 @@ class ChapterController extends AbstractController
      */
     private $categoryRepository;
 
+    /**
+     * @var ObjectManager
+     */
+    private $em;
+
     public function __construct(Security $security, CategoryRepository $categoryRepository, ManagerRegistry $managerRegistry)
     {
         $this->security = $security;
@@ -36,6 +42,9 @@ class ChapterController extends AbstractController
 
     /**
      * @Route("/editor/chapter/list/{idCourse}", name="editor.chapter.list", requirements={"idCourse"="\d+"})
+     * 
+     * @param Course $course
+     * @return Response
      */
     public function list(Course $course): Response
     {
@@ -57,8 +66,12 @@ class ChapterController extends AbstractController
 
     /**
      * @Route("/editor/chapter/edit/{id}", name="editor.chapter.edit", requirements={"id"="\d+"})
+     * 
+     * @param Chapter $chapter
+     * @param Request $request
+     * @return Response
      */
-    public function edit(Chapter $chapter, Request $request)
+    public function edit(Chapter $chapter, Request $request): Response
     {
         $user = $this->security->getUser();
 
@@ -85,8 +98,13 @@ class ChapterController extends AbstractController
 
     /**
      * @Route("/editor/chapter/add/{id}", name="editor.chapter.add", requirements={"page"="\d+"})
+     * 
+     * @param Course $course
+     * @param Request $request
+     * @param ChapterRepository $chapterRepository
+     * @return Response
      */
-    public function add(Course $course, Request $request, ChapterRepository $chapterRepository)
+    public function add(Course $course, Request $request, ChapterRepository $chapterRepository): Response
     {
         $user = $this->security->getUser();
 
@@ -118,8 +136,13 @@ class ChapterController extends AbstractController
 
     /**
      * @Route("/editor/chapter/duplicate/{id}", name="editor.chapter.duplicate", requirements={"page"="\d+"})
+     * 
+     * @param Chapter $chapter
+     * @param Request $request
+     * @param ChapterRepository $chapterRepository
+     * @return Response
      */
-    public function duplicate(Chapter $chapter, Request $request, ChapterRepository $chapterRepository)
+    public function duplicate(Chapter $chapter, Request $request, ChapterRepository $chapterRepository): Response
     {
         $user = $this->security->getUser();
 

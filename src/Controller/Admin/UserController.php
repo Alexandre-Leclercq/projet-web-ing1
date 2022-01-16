@@ -41,6 +41,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/user/list", name="admin.user.list")
+     * 
+     * @param UserRepository $userRepository
+     * @return Response
      */
     public function list(UserRepository $userRepository): Response
     {
@@ -64,17 +67,17 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            if(!is_null($form->get('plainPassword')->getData())){
+            if(!is_null($form->get('plainPassword')->getData())){ // if a password has been send to the form we encode it
                 $userPasswordHasherInterface->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 );
             }
-            if(!is_null($form->get('picture')->getData())){
-                $filename = $fileUploader->uploadFile($form->get('picture')->getData());
+            if(!is_null($form->get('picture')->getData())){ // if a picture has been sent
+                $filename = $fileUploader->uploadFile($form->get('picture')->getData()); // we upload it
                 $user->setPictureFilelink($filename);
             }
-            $this->em->persist($user);
+            $this->em->persist($user); // update user
             $this->em->flush();
             if($user->getIdRole()->getIdRole() == $this->getParameter('user.idRole.admin')){
                 return $this->redirectToRoute('admin.user.list');
